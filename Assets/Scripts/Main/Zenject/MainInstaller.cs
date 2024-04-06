@@ -1,4 +1,4 @@
-using System;
+using System.Collections.Generic;
 using Map;
 using Networking;
 using UnityEngine;
@@ -11,6 +11,9 @@ namespace Main.Zenject
         [Header("References")]
         [SerializeField] private MapCamera _mapCamera;
 
+        [Header("Preferences")]
+        [SerializeField] private List<Transform> _playerSpawnPoints;
+
         #region MonoBehaviour
 
         private void OnValidate() => _mapCamera ??= FindObjectOfType<MapCamera>(true);
@@ -21,6 +24,7 @@ namespace Main.Zenject
         {
             Container.Bind<ClientServerConnection>().AsSingle();
             Container.BindInstance(_mapCamera).AsSingle();
+            Container.Bind<PlayerSpawnPoints>().AsSingle().WithArguments(_playerSpawnPoints);
         }
     }
 }
