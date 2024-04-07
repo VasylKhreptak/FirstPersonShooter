@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 
@@ -7,7 +6,7 @@ namespace Utilities.GizmosUtilities
     public class GizmosSphereDrawer : MonoBehaviour
     {
         [Header("Preferences")]
-        [SerializeField] private Color _color = Color.red.WithAlpha(0.5f);
+        [SerializeField] private Color _color = Color.red;
         [SerializeField] [Min(0)] private float _range = 0.2f;
         [SerializeField] private bool _drawOnlyWhenSelected = true;
 
