@@ -3,10 +3,12 @@ using FishNet.Connection;
 using FishNet.Object;
 using Graphics;
 using Infrastructure.Data.Static.Core;
+using Infrastructure.Services.Log.Core;
 using Infrastructure.Services.StaticData.Core;
 using Main.UI;
 using Map;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Zenject;
 
 namespace Networking
@@ -18,22 +20,24 @@ namespace Networking
         private PlayerSpawnPoints _spawnPoints;
         private MapCamera _mapCamera;
         private CursorLocker _cursorLocker;
+        private ILogService _logService;
 
         [Inject]
         private void Constructor(IStaticDataService staticDataService, Crosshair crosshair, PlayerSpawnPoints spawnPoints,
-            MapCamera mapCamera, CursorLocker cursorLocker)
+            MapCamera mapCamera, CursorLocker cursorLocker, ILogService logService)
         {
             _staticDataService = staticDataService;
             _crosshair = crosshair;
             _spawnPoints = spawnPoints;
             _mapCamera = mapCamera;
             _cursorLocker = cursorLocker;
+            _logService = logService;
         }
 
         private GameObject _player;
 
         private bool _joined = false;
-        private bool _clientConnected;
+        private bool _isConnectedToServer;
 
         #region Networking
 
@@ -41,21 +45,21 @@ namespace Networking
         {
             base.OnStartClient();
 
-            _clientConnected = true;
+            _isConnectedToServer = true;
         }
 
         public override void OnStopClient()
         {
             base.OnStopClient();
 
-            _clientConnected = false;
+            _isConnectedToServer = false;
         }
 
         #endregion
 
         public void Join()
         {
-            if (_joined || _clientConnected == false)
+            if (_joined || _isConnectedToServer == false)
                 return;
 
             _crosshair.Enabled = true;
@@ -63,6 +67,8 @@ namespace Networking
             _cursorLocker.Enabled = true;
             Cursor.lockState = CursorLockMode.Locked;
             SpawnPlayer();
+
+            _logService.Log("Joined battle");
 
             _joined = true;
         }
@@ -77,6 +83,8 @@ namespace Networking
             _cursorLocker.Enabled = false;
             Cursor.lockState = CursorLockMode.None;
             DespawnPlayer();
+
+            _logService.Log("Left battle");
 
             _joined = false;
         }
@@ -99,6 +107,7 @@ namespace Networking
         private void DespawnPlayer()
         {
             Despawn(_player);
+
             _player = null;
         }
     }

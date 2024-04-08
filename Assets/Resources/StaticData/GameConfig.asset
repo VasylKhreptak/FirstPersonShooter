@@ -15,4 +15,4 @@ MonoBehaviour:
   _bootstrapScene: Bootstrap
   _mainScene: MainScene
   _editorLogType: -1
-  _buildLogType: 0
+  _buildLogType: 7

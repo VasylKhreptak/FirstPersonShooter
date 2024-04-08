@@ -19,6 +19,8 @@ namespace Main.Health
 
         public IReadOnlyReactiveProperty<float> Fill => _value.Select(value => value / _maxValue).ToReadOnlyReactiveProperty();
 
+        public IReadOnlyReactiveProperty<bool> IsDeath => _value.Select(x => Mathf.Approximately(x, 0f)).ToReadOnlyReactiveProperty();
+
         #region MonoBehaviour
 
         private void Awake()
@@ -42,12 +44,11 @@ namespace Main.Health
 
         public void TakeDamage(float damage) => TakeDamageServer(damage);
 
-        [ServerRpc]
+        [ServerRpc(RequireOwnership = false)]
         private void TakeDamageServer(float damage)
         {
-            damage = Mathf.Clamp(damage, 0f, _value.Value);
-
-            _value.Value -= damage;
+            damage = Mathf.Clamp(damage, 0f, _syncVar.Value);
+            _syncVar.Value -= damage;
         }
     }
 }

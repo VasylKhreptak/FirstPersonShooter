@@ -22,32 +22,25 @@ namespace Main.Entities.Player
 
         private IDisposable _subscription;
 
-        #region Networking
+        #region MonoBehaviour
 
         public override void OnStartClient()
         {
             base.OnStartClient();
 
             if (IsOwner == false)
-            {
-                enabled = false;
-                _subscription?.Dispose();
-            }
+                return;
+
+            _subscription = _health.IsDeath.Where(x => x).Subscribe(_ => OnDied());
         }
 
-        #endregion
-
-        #region MonoBehaviour
-
-        private void OnEnable() => _subscription = _health.Value.Where(x => x == 0).Subscribe(_ => OnDied());
-
-        private void OnDisable() => _subscription?.Dispose();
+        private void OnDestroy() => _subscription?.Dispose();
 
         #endregion
 
         private void OnDied()
         {
-            _subscription.Dispose();
+            _subscription?.Dispose();
             _battle.Leave();
         }
     }
