@@ -11,7 +11,7 @@ using Zenject;
 
 namespace Networking
 {
-    public class BattleController : NetworkBehaviour
+    public class Battle : NetworkBehaviour
     {
         private IStaticDataService _staticDataService;
         private Crosshair _crosshair;

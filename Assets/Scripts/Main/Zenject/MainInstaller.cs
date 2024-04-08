@@ -5,6 +5,7 @@ using Main.Weapons.Core;
 using Map;
 using Networking;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Zenject;
 
 namespace Main.Zenject
@@ -14,7 +15,7 @@ namespace Main.Zenject
         [Header("References")]
         [SerializeField] private MapCamera _mapCamera;
         [SerializeField] private Crosshair _crosshair;
-        [SerializeField] private BattleController _battleController;
+        [FormerlySerializedAs("_battleController")] [SerializeField] private Battle _battle;
         [SerializeField] private CursorLocker _cursorLocker;
         [SerializeField] private Touchpad _touchpad;
         [SerializeField] private ShootProcessor _shootProcessor;
@@ -41,7 +42,7 @@ namespace Main.Zenject
             Container.BindInstance(_crosshair).AsSingle();
             Container.BindInstance(_mapCamera).AsSingle();
             Container.Bind<PlayerSpawnPoints>().AsSingle().WithArguments(_playerSpawnPoints);
-            Container.BindInstance(_battleController).AsSingle();
+            Container.BindInstance(_battle).AsSingle();
             Container.BindInstance(_cursorLocker).AsSingle();
             Container.BindInterfacesTo<CursorUnlocker>().AsSingle();
             Container.BindInstance(_touchpad).AsSingle();

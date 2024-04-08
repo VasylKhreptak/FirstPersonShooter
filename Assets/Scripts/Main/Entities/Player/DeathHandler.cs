@@ -12,24 +12,34 @@ namespace Main.Entities.Player
         [Header("References")]
         [SerializeField] private Health.Health _health;
 
-        private BattleController _battleController;
+        private Battle _battle;
 
         [Inject]
-        private void Constructor(BattleController battleController)
+        private void Constructor(Battle battle)
         {
-            _battleController = battleController;
+            _battle = battle;
         }
 
         private IDisposable _subscription;
 
+        #region Networking
+
+        public override void OnStartClient()
+        {
+            base.OnStartClient();
+
+            if (IsOwner == false)
+            {
+                enabled = false;
+                _subscription?.Dispose();
+            }
+        }
+
+        #endregion
+
         #region MonoBehaviour
 
-        private void OnEnable()
-        {
-            enabled = IsOwner;
-
-            _subscription = _health.Value.Where(x => x == 0).Subscribe(_ => OnDied());
-        }
+        private void OnEnable() => _subscription = _health.Value.Where(x => x == 0).Subscribe(_ => OnDied());
 
         private void OnDisable() => _subscription?.Dispose();
 
@@ -38,7 +48,7 @@ namespace Main.Entities.Player
         private void OnDied()
         {
             _subscription.Dispose();
-            _battleController.Leave();
+            _battle.Leave();
         }
     }
 }

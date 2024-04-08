@@ -39,6 +39,9 @@ namespace Main.Entities.Player
 
         private void LookStep()
         {
+            if (Cursor.lockState != CursorLockMode.Locked)
+                return;
+
             _mouseX = Input.GetAxis("Mouse X") * _sensitivity;
             _mouseY = Input.GetAxis("Mouse Y") * _sensitivity * _inverse.Sign();
 

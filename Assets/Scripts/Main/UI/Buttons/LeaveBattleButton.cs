@@ -6,14 +6,14 @@ namespace Main.UI.Buttons
 {
     public class LeaveBattleButton : BaseButton
     {
-        private BattleController _battleController;
+        private Battle _battle;
 
         [Inject]
-        private void Constructor(BattleController battleController)
+        private void Constructor(Battle battle)
         {
-            _battleController = battleController;
+            _battle = battle;
         }
 
-        protected override void OnClicked() => _battleController.Leave();
+        protected override void OnClicked() => _battle.Leave();
     }
 }

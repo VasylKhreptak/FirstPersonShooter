@@ -69,6 +69,12 @@ namespace Main.Entities.Player
             float horizontal = Input.GetAxis("Horizontal");
             float vertical = Input.GetAxis("Vertical");
 
+            if (Cursor.lockState != CursorLockMode.Locked)
+            {
+                horizontal = 0;
+                vertical = 0;
+            }
+
             Vector3 direction = _transform.right * horizontal + _transform.forward * vertical;
             direction = Vector3.ClampMagnitude(direction, 1f);
             Vector3 motion = direction * _speed;
@@ -79,7 +85,7 @@ namespace Main.Entities.Player
 
         private void HandleJump()
         {
-            if (Input.GetButtonDown("Jump") && _isGrounded)
+            if (Input.GetButtonDown("Jump") && _isGrounded && Cursor.lockState == CursorLockMode.Locked)
                 _velocity.y = Mathf.Sqrt(_jumpHeight * -2f * Physics.gravity.y);
         }
 
