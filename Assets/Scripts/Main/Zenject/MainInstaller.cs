@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Graphics;
 using Main.UI;
+using Main.Weapons.Core;
 using Map;
 using Networking;
 using UnityEngine;
@@ -15,6 +16,8 @@ namespace Main.Zenject
         [SerializeField] private Crosshair _crosshair;
         [SerializeField] private BattleController _battleController;
         [SerializeField] private CursorLocker _cursorLocker;
+        [SerializeField] private Touchpad _touchpad;
+        [SerializeField] private ShootProcessor _shootProcessor;
 
         [Header("Preferences")]
         [SerializeField] private List<Transform> _playerSpawnPoints;
@@ -26,6 +29,8 @@ namespace Main.Zenject
             _mapCamera ??= FindObjectOfType<MapCamera>(true);
             _crosshair ??= FindObjectOfType<Crosshair>(true);
             _cursorLocker ??= FindObjectOfType<CursorLocker>(true);
+            _touchpad ??= FindObjectOfType<Touchpad>(true);
+            _shootProcessor ??= FindObjectOfType<ShootProcessor>(true);
         }
 
         #endregion
@@ -39,6 +44,8 @@ namespace Main.Zenject
             Container.BindInstance(_battleController).AsSingle();
             Container.BindInstance(_cursorLocker).AsSingle();
             Container.BindInterfacesTo<CursorUnlocker>().AsSingle();
+            Container.BindInstance(_touchpad).AsSingle();
+            Container.BindInstance(_shootProcessor).AsSingle();
         }
     }
 }

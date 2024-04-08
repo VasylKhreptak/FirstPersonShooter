@@ -1,5 +1,4 @@
 using Extensions;
-using FishNet;
 using FishNet.Connection;
 using FishNet.Object;
 using Graphics;
@@ -34,10 +33,29 @@ namespace Networking
         private GameObject _player;
 
         private bool _joined = false;
+        private bool _clientConnected;
+
+        #region Networking
+
+        public override void OnStartClient()
+        {
+            base.OnStartClient();
+
+            _clientConnected = true;
+        }
+
+        public override void OnStopClient()
+        {
+            base.OnStopClient();
+
+            _clientConnected = false;
+        }
+
+        #endregion
 
         public void Join()
         {
-            if (_joined || InstanceFinder.IsServerStarted == false)
+            if (_joined || _clientConnected == false)
                 return;
 
             _crosshair.Enabled = true;
