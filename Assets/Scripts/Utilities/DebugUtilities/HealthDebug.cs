@@ -10,8 +10,8 @@ namespace Utilities.DebugUtilities
         [Header("References")]
         [SerializeField] private Health _health;
 
-        [SerializeField, ReadOnly] private float _healthValue;
-        [SerializeField, ReadOnly] private bool _isDeath; 
+        [SerializeField] [ReadOnly] private float _healthValue;
+        [SerializeField] [ReadOnly] private bool _isDeath;
 
         #region MonoBehaviour
 

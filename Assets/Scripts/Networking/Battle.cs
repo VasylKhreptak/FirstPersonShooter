@@ -8,7 +8,6 @@ using Infrastructure.Services.StaticData.Core;
 using Main.UI;
 using Map;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Zenject;
 
 namespace Networking
@@ -36,7 +35,7 @@ namespace Networking
 
         private GameObject _player;
 
-        private bool _joined = false;
+        private bool _joined;
         private bool _isConnectedToServer;
 
         #region Networking
