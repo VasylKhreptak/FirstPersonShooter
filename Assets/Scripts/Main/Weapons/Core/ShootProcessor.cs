@@ -11,8 +11,6 @@ namespace Main.Weapons.Core
         [ServerRpc(RequireOwnership = false)]
         private void ShootServer(Ray ray, float damage)
         {
-            Debug.DrawRay(ray.origin, ray.direction * 100f, Color.red, 100000f);
-
             if (Physics.Raycast(ray, out RaycastHit hitInfo) == false)
                 return;
 
