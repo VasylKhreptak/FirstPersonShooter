@@ -25,6 +25,7 @@ namespace Main.Zenject
         [SerializeField] private Chat _chat;
         [SerializeField] private JoinBattleButton _joinBattleButton;
         [SerializeField] private LeaveBattleButton _leaveBattleButton;
+        [SerializeField] private HitIndicator _hitIndicator;
 
         [Header("Preferences")]
         [SerializeField] private List<Transform> _playerSpawnPoints;
@@ -42,6 +43,7 @@ namespace Main.Zenject
             _chat ??= FindObjectOfType<Chat>(true);
             _joinBattleButton ??= FindObjectOfType<JoinBattleButton>(true);
             _leaveBattleButton ??= FindObjectOfType<LeaveBattleButton>(true);
+            _hitIndicator ??= FindObjectOfType<HitIndicator>(true);
         }
 
         #endregion
@@ -61,6 +63,7 @@ namespace Main.Zenject
             Container.BindInstance(_chat).AsSingle();
             Container.BindInstance(_joinBattleButton).AsSingle();
             Container.BindInstance(_leaveBattleButton).AsSingle();
+            Container.BindInstance(_hitIndicator).AsSingle();
         }
     }
 }

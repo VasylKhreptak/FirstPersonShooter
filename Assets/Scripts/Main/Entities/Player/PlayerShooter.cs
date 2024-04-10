@@ -2,6 +2,7 @@ using FishNet.Object;
 using Infrastructure.Services.Log.Core;
 using Main.Health;
 using Serialization.MinMax;
+using UI;
 using UnityEngine;
 using Zenject;
 
@@ -17,11 +18,13 @@ namespace Main.Entities.Player
         [SerializeField] private FloatMinMax _damage = new FloatMinMax(5f, 10f);
 
         private ILogService _logService;
+        private HitIndicator _hitIndicator;
 
         [Inject]
-        private void Constructor(ILogService logService)
+        private void Constructor(ILogService logService, HitIndicator hitIndicator)
         {
             _logService = logService;
+            _hitIndicator = hitIndicator;
         }
 
         private float _time;
@@ -69,7 +72,10 @@ namespace Main.Entities.Player
                 damageable.TakeDamage(_damage.Random());
 
             if (hitInfo.collider.TryGetComponent(out Player player))
+            {
+                _hitIndicator.Trigger();
                 _logService.Log($"Hit player with username: {player.GetUsername()}");
+            }
         }
     }
 }
