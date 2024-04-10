@@ -83,7 +83,7 @@ namespace UI.Chat
             }
         }
 
-        private void SendMessage(Message message)
+        public void SendMessage(Message message)
         {
             if (InstanceFinder.IsServerStarted)
                 InstanceFinder.ServerManager.Broadcast(message);

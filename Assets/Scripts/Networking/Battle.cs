@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using Data;
 using Extensions;
+using FishNet;
 using FishNet.Connection;
 using FishNet.Object;
 using Graphics;
@@ -9,6 +11,7 @@ using Infrastructure.Services.StaticData.Core;
 using Map;
 using UI;
 using UI.Buttons;
+using UI.Chat;
 using UnityEngine;
 using Zenject;
 
@@ -24,11 +27,13 @@ namespace Networking
         private ILogService _logService;
         private JoinBattleButton _joinBattleButton;
         private LeaveBattleButton _leaveBattleButton;
+        private Chat _chat;
+        private ClientsData _clientsData;
 
         [Inject]
         private void Constructor(IStaticDataService staticDataService, Crosshair crosshair, PlayerSpawnPoints spawnPoints,
             MapCamera mapCamera, CursorLocker cursorLocker, ILogService logService, JoinBattleButton joinBattleButton,
-            LeaveBattleButton leaveBattleButton)
+            LeaveBattleButton leaveBattleButton, Chat chat, ClientsData clientsData)
         {
             _staticDataService = staticDataService;
             _crosshair = crosshair;
@@ -38,6 +43,8 @@ namespace Networking
             _logService = logService;
             _joinBattleButton = joinBattleButton;
             _leaveBattleButton = leaveBattleButton;
+            _chat = chat;
+            _clientsData = clientsData;
         }
 
         private bool _joined;
@@ -74,6 +81,7 @@ namespace Networking
             Cursor.lockState = CursorLockMode.Locked;
             _joinBattleButton.Interactable = false;
             _leaveBattleButton.Interactable = true;
+            SendMessageFromClient("joined the battle");
             SpawnPlayer();
 
             _logService.Log("Joined battle");
@@ -92,6 +100,7 @@ namespace Networking
             Cursor.lockState = CursorLockMode.None;
             _joinBattleButton.Interactable = true;
             _leaveBattleButton.Interactable = false;
+            SendMessageFromClient("left the battle");
             DespawnPlayer();
 
             _logService.Log("Left battle");
@@ -121,6 +130,16 @@ namespace Networking
             _idPlayerObjectMap.Remove(connection.ClientId);
 
             Despawn(playerObject);
+        }
+
+        private void SendMessageFromClient(string text)
+        {
+            Message message = new Message
+            {
+                Username = _clientsData.Get(InstanceFinder.ClientManager.Connection.ClientId).Username, Content = text
+            };
+
+            _chat.SendMessage(message);
         }
     }
 }
