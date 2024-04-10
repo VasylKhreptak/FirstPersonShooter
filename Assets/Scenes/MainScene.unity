@@ -388,53 +388,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3507529684465261469, guid: c5c251c4f6ea3694285b311cea75f2a2, type: 3}
   m_PrefabInstance: {fileID: 60268411}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &69632796
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 69632797}
-  - component: {fileID: 69632798}
-  m_Layer: 0
-  m_Name: ShootProcessor
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &69632797
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 69632796}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1967716036}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &69632798
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 69632796}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2e0b741553b245f88aa428904598a444, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _componentIndexCache: 1
-  _addedNetworkObject: {fileID: 1967716037}
-  _networkObjectCache: {fileID: 1967716037}
 --- !u!1001 &109559963
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1096,7 +1049,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d05cde766b046dabde62784a3c2574f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _componentIndexCache: 2
+  _componentIndexCache: 1
   _addedNetworkObject: {fileID: 1967716037}
   _networkObjectCache: {fileID: 1967716037}
 --- !u!1001 &182771063
@@ -4266,7 +4219,6 @@ MonoBehaviour:
   _battle: {fileID: 714161719}
   _cursorLocker: {fileID: 1361037014}
   _touchpad: {fileID: 1361037015}
-  _shootProcessor: {fileID: 69632798}
   _clientsData: {fileID: 176303299}
   _usernameInputField: {fileID: 1245331024}
   _chat: {fileID: 1837234441}
@@ -7242,7 +7194,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48ddfdb1e81a4e87bc181da129540abc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _componentIndexCache: 4
+  _componentIndexCache: 3
   _addedNetworkObject: {fileID: 1967716037}
   _networkObjectCache: {fileID: 1967716037}
 --- !u!1 &1413337428
@@ -9373,7 +9325,6 @@ Transform:
   m_Children:
   - {fileID: 2075507809}
   - {fileID: 714161718}
-  - {fileID: 69632797}
   - {fileID: 176303298}
   - {fileID: 2070623761}
   - {fileID: 1402720735}
@@ -9396,7 +9347,6 @@ MonoBehaviour:
   <PredictedSpawn>k__BackingField: {fileID: 0}
   _networkBehaviours:
   - {fileID: 714161719}
-  - {fileID: 69632798}
   - {fileID: 176303299}
   - {fileID: 2070623762}
   - {fileID: 1402720736}
@@ -9835,7 +9785,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4c1bd5a179c4d4db3ea50dcabcad7c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _componentIndexCache: 3
+  _componentIndexCache: 2
   _addedNetworkObject: {fileID: 1967716037}
   _networkObjectCache: {fileID: 1967716037}
 --- !u!1 &2075507807

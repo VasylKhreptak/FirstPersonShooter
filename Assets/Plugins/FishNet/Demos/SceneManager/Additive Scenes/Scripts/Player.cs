@@ -1,14 +1,13 @@
-﻿using FishNet.Connection;
-using FishNet.Object;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using FishNet.Connection;
+using FishNet.Object;
 using UnityEngine;
 
 namespace FishNet.Demo.AdditiveScenes
 {
     public class Player : NetworkBehaviour
     {
-
         [SerializeField]
         private Transform _ownerObjects;
         [SerializeField]
@@ -20,7 +19,7 @@ namespace FishNet.Demo.AdditiveScenes
 
         public override void OnStartServer()
         {
-            _wayPoints = GameObject.FindObjectsOfType<Waypoint>().ToList();
+            _wayPoints = FindObjectsOfType<Waypoint>().ToList();
             /* Stagger spawn position slightly depending on player count.
              * Also inverse direction so players cross each other when more
              * than one. This is just demo fanciness. */
@@ -76,7 +75,5 @@ namespace FishNet.Demo.AdditiveScenes
                     _goalIndex = 0;
             }
         }
-
     }
-
 }

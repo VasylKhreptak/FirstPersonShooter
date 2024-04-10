@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using Data;
 using Graphics;
-using Main.Weapons.Core;
 using Map;
 using Networking;
 using UI;
@@ -21,7 +20,6 @@ namespace Main.Zenject
         [SerializeField] private Battle _battle;
         [SerializeField] private CursorLocker _cursorLocker;
         [SerializeField] private Touchpad _touchpad;
-        [SerializeField] private ShootProcessor _shootProcessor;
         [SerializeField] private ClientsData _clientsData;
         [SerializeField] private UsernameInputField _usernameInputField;
         [SerializeField] private Chat _chat;
@@ -39,7 +37,6 @@ namespace Main.Zenject
             _crosshair ??= FindObjectOfType<Crosshair>(true);
             _cursorLocker ??= FindObjectOfType<CursorLocker>(true);
             _touchpad ??= FindObjectOfType<Touchpad>(true);
-            _shootProcessor ??= FindObjectOfType<ShootProcessor>(true);
             _clientsData ??= FindObjectOfType<ClientsData>(true);
             _usernameInputField ??= FindObjectOfType<UsernameInputField>(true);
             _chat ??= FindObjectOfType<Chat>(true);
@@ -59,7 +56,6 @@ namespace Main.Zenject
             Container.BindInstance(_cursorLocker).AsSingle();
             Container.BindInterfacesTo<CursorUnlocker>().AsSingle();
             Container.BindInstance(_touchpad).AsSingle();
-            Container.BindInstance(_shootProcessor).AsSingle();
             Container.BindInstance(_clientsData).AsSingle();
             Container.BindInstance(_usernameInputField).AsSingle();
             Container.BindInstance(_chat).AsSingle();

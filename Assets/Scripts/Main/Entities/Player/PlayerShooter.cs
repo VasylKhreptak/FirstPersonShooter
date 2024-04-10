@@ -1,5 +1,6 @@
 using FishNet.Object;
-using Main.Weapons.Core;
+using Infrastructure.Services.Log.Core;
+using Main.Health;
 using Serialization.MinMax;
 using UnityEngine;
 using Zenject;
@@ -15,12 +16,12 @@ namespace Main.Entities.Player
         [SerializeField] private float _interval = 0.07f;
         [SerializeField] private FloatMinMax _damage = new FloatMinMax(5f, 10f);
 
-        private ShootProcessor _shootProcessor;
+        private ILogService _logService;
 
         [Inject]
-        private void Constructor(ShootProcessor shootProcessor)
+        private void Constructor(ILogService logService)
         {
-            _shootProcessor = shootProcessor;
+            _logService = logService;
         }
 
         private float _time;
@@ -56,11 +57,19 @@ namespace Main.Entities.Player
 
         private void Shoot()
         {
-            Ray ray = _camera.ScreenPointToRay(GetScreenCenter());
+            Transform cameraTransform = _camera.transform;
+            Ray ray = new Ray(cameraTransform.position, cameraTransform.forward);
 
-            _shootProcessor.Shoot(ray, _damage.Random());
+            if (Physics.Raycast(ray, out RaycastHit hitInfo) == false)
+                return;
+
+            _logService.Log("Hit game object: " + hitInfo.collider.gameObject.name);
+
+            if (hitInfo.collider.TryGetComponent(out IDamageable damageable))
+                damageable.TakeDamage(_damage.Random());
+
+            if (hitInfo.collider.TryGetComponent(out Player player))
+                _logService.Log($"Hit player with username: {player.GetUsername()}");
         }
-
-        private Vector3 GetScreenCenter() => new Vector3(Screen.width / 2, Screen.height / 2);
     }
 }
