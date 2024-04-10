@@ -4270,6 +4270,8 @@ MonoBehaviour:
   _clientsData: {fileID: 176303299}
   _usernameInputField: {fileID: 1245331024}
   _chat: {fileID: 1837234441}
+  _joinBattleButton: {fileID: 276975224}
+  _leaveBattleButton: {fileID: 205536501}
   _playerSpawnPoints:
   - {fileID: 1450980462}
   - {fileID: 1082232177}
@@ -5757,7 +5759,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 557.02124, y: -48.100006}
+  m_AnchoredPosition: {x: 574, y: -48.100006}
   m_SizeDelta: {x: 255.866, y: 64}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1245331020
@@ -7240,9 +7242,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48ddfdb1e81a4e87bc181da129540abc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _componentIndexCache: 255
+  _componentIndexCache: 4
   _addedNetworkObject: {fileID: 1967716037}
-  _networkObjectCache: {fileID: 0}
+  _networkObjectCache: {fileID: 1967716037}
 --- !u!1 &1413337428
 GameObject:
   m_ObjectHideFlags: 0
@@ -9397,6 +9399,7 @@ MonoBehaviour:
   - {fileID: 69632798}
   - {fileID: 176303299}
   - {fileID: 2070623762}
+  - {fileID: 1402720736}
   <SerializedRootNetworkBehaviour>k__BackingField: {fileID: 0}
   <NestedRootNetworkBehaviours>k__BackingField: []
   SerializedTransformProperties:
