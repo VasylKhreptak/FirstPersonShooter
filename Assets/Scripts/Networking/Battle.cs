@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Extensions;
 using FishNet.Connection;
 using FishNet.Object;
@@ -39,10 +40,10 @@ namespace Networking
             _leaveBattleButton = leaveBattleButton;
         }
 
-        private GameObject _player;
-
         private bool _joined;
         private bool _isConnectedToServer;
+
+        private Dictionary<int, GameObject> _idPlayerObjectMap = new Dictionary<int, GameObject>();
 
         #region Networking
 
@@ -107,17 +108,19 @@ namespace Networking
 
             GameObject player = Instantiate(playerPrefab, spawnPoint.position, spawnPoint.rotation);
 
-            _player = player;
+            _idPlayerObjectMap.Add(connection.ClientId, player);
 
             Spawn(player, connection);
         }
 
         [ServerRpc(RequireOwnership = false)]
-        private void DespawnPlayer()
+        private void DespawnPlayer(NetworkConnection connection = null)
         {
-            Despawn(_player);
+            GameObject playerObject = _idPlayerObjectMap[connection.ClientId];
 
-            _player = null;
+            _idPlayerObjectMap.Remove(connection.ClientId);
+
+            Despawn(playerObject);
         }
     }
 }

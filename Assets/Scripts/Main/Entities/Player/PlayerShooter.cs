@@ -66,7 +66,7 @@ namespace Main.Entities.Player
             if (Physics.Raycast(ray, out RaycastHit hitInfo) == false)
                 return;
 
-            _logService.Log("Hit game object: " + hitInfo.collider.gameObject.name);
+            _logService.Log("Hit GameObject: " + hitInfo.collider.gameObject.name);
 
             if (hitInfo.collider.TryGetComponent(out IDamageable damageable))
                 damageable.TakeDamage(_damage.Random());
