@@ -39,13 +39,15 @@ namespace Data
         {
             if (state.ConnectionState == RemoteConnectionState.Started)
             {
-                Map.Add(connection, new ClientData());
                 _logService.Log("Client connected");
+                Map.Add(connection, new ClientData());
+                _logService.Log("Client data created");
             }
             else if (state.ConnectionState == RemoteConnectionState.Stopped)
             {
-                Map.Remove(connection);
                 _logService.Log("Client disconnected");
+                Map.Remove(connection);
+                _logService.Log("Client data removed");
             }
         }
 
