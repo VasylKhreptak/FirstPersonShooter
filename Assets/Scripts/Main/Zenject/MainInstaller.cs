@@ -50,7 +50,6 @@ namespace Main.Zenject
 
         public override void InstallBindings()
         {
-            Container.Bind<ClientServerConnection>().AsSingle();
             Container.BindInstance(_crosshair).AsSingle();
             Container.BindInstance(_mapCamera).AsSingle();
             Container.Bind<PlayerSpawnPoints>().AsSingle().WithArguments(_playerSpawnPoints);
