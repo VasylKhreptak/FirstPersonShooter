@@ -1,8 +1,8 @@
-using Main.UI.Buttons.Core;
 using Networking;
+using UI.Buttons.Core;
 using Zenject;
 
-namespace Main.UI.Buttons
+namespace UI.Buttons
 {
     public class LeaveBattleButton : BaseButton
     {
@@ -13,6 +13,14 @@ namespace Main.UI.Buttons
         {
             _battle = battle;
         }
+
+        public bool Interactable
+        {
+            get => Button.interactable;
+            set => Button.interactable = value;
+        }
+
+        private void Awake() => Interactable = false;
 
         protected override void OnClicked() => _battle.Leave();
     }

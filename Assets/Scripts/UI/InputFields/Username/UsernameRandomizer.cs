@@ -2,7 +2,7 @@ using TMPro;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace Main.UI.InputFields
+namespace UI.InputFields.Username
 {
     public class UsernameRandomizer : MonoBehaviour
     {

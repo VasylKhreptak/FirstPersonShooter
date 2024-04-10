@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-namespace Main.UI.InputFields
+namespace UI.InputFields.Username
 {
     public class UsernameInputField : MonoBehaviour
     {

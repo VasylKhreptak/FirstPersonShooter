@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace Main.UI
+namespace UI
 {
     public class Touchpad : MonoBehaviour
     {

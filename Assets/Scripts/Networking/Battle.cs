@@ -5,8 +5,9 @@ using Graphics;
 using Infrastructure.Data.Static.Core;
 using Infrastructure.Services.Log.Core;
 using Infrastructure.Services.StaticData.Core;
-using Main.UI;
 using Map;
+using UI;
+using UI.Buttons;
 using UnityEngine;
 using Zenject;
 
@@ -20,10 +21,13 @@ namespace Networking
         private MapCamera _mapCamera;
         private CursorLocker _cursorLocker;
         private ILogService _logService;
+        private JoinBattleButton _joinBattleButton;
+        private LeaveBattleButton _leaveBattleButton;
 
         [Inject]
         private void Constructor(IStaticDataService staticDataService, Crosshair crosshair, PlayerSpawnPoints spawnPoints,
-            MapCamera mapCamera, CursorLocker cursorLocker, ILogService logService)
+            MapCamera mapCamera, CursorLocker cursorLocker, ILogService logService, JoinBattleButton joinBattleButton,
+            LeaveBattleButton leaveBattleButton)
         {
             _staticDataService = staticDataService;
             _crosshair = crosshair;
@@ -31,6 +35,8 @@ namespace Networking
             _mapCamera = mapCamera;
             _cursorLocker = cursorLocker;
             _logService = logService;
+            _joinBattleButton = joinBattleButton;
+            _leaveBattleButton = leaveBattleButton;
         }
 
         private GameObject _player;
@@ -65,6 +71,8 @@ namespace Networking
             _mapCamera.Enabled = false;
             _cursorLocker.Enabled = true;
             Cursor.lockState = CursorLockMode.Locked;
+            _joinBattleButton.Interactable = false;
+            _leaveBattleButton.Interactable = true;
             SpawnPlayer();
 
             _logService.Log("Joined battle");
@@ -81,6 +89,8 @@ namespace Networking
             _mapCamera.Enabled = true;
             _cursorLocker.Enabled = false;
             Cursor.lockState = CursorLockMode.None;
+            _joinBattleButton.Interactable = true;
+            _leaveBattleButton.Interactable = false;
             DespawnPlayer();
 
             _logService.Log("Left battle");

@@ -1,12 +1,14 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Main.UI.Buttons.Core
+namespace UI.Buttons.Core
 {
     public abstract class BaseButton : MonoBehaviour
     {
         [Header("References")]
-        [SerializeField] private Button _button;
+        [SerializeField] Button _button;
+
+        protected Button Button => _button;
 
         #region MonoBehaviour
 

@@ -1,11 +1,13 @@
 using System.Collections.Generic;
 using Data;
 using Graphics;
-using Main.UI;
-using Main.UI.InputFields;
 using Main.Weapons.Core;
 using Map;
 using Networking;
+using UI;
+using UI.Buttons;
+using UI.Chat;
+using UI.InputFields.Username;
 using UnityEngine;
 using Zenject;
 
@@ -22,6 +24,9 @@ namespace Main.Zenject
         [SerializeField] private ShootProcessor _shootProcessor;
         [SerializeField] private ClientsData _clientsData;
         [SerializeField] private UsernameInputField _usernameInputField;
+        [SerializeField] private Chat _chat;
+        [SerializeField] private JoinBattleButton _joinBattleButton;
+        [SerializeField] private LeaveBattleButton _leaveBattleButton;
 
         [Header("Preferences")]
         [SerializeField] private List<Transform> _playerSpawnPoints;
@@ -37,6 +42,9 @@ namespace Main.Zenject
             _shootProcessor ??= FindObjectOfType<ShootProcessor>(true);
             _clientsData ??= FindObjectOfType<ClientsData>(true);
             _usernameInputField ??= FindObjectOfType<UsernameInputField>(true);
+            _chat ??= FindObjectOfType<Chat>(true);
+            _joinBattleButton ??= FindObjectOfType<JoinBattleButton>(true);
+            _leaveBattleButton ??= FindObjectOfType<LeaveBattleButton>(true);
         }
 
         #endregion
@@ -54,6 +62,9 @@ namespace Main.Zenject
             Container.BindInstance(_shootProcessor).AsSingle();
             Container.BindInstance(_clientsData).AsSingle();
             Container.BindInstance(_usernameInputField).AsSingle();
+            Container.BindInstance(_chat).AsSingle();
+            Container.BindInstance(_joinBattleButton).AsSingle();
+            Container.BindInstance(_leaveBattleButton).AsSingle();
         }
     }
 }

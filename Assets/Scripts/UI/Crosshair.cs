@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Main.UI
+namespace UI
 {
     public class Crosshair : MonoBehaviour
     {

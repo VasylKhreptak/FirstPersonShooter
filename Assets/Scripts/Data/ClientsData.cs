@@ -1,58 +1,27 @@
-using FishNet;
-using FishNet.Connection;
 using FishNet.Object;
 using FishNet.Object.Synchronizing;
-using FishNet.Transporting;
-using Infrastructure.Services.Log.Core;
-using Zenject;
 
 namespace Data
 {
     public class ClientsData : NetworkBehaviour
     {
-        private readonly SyncDictionary<NetworkConnection, ClientData> Map = new SyncDictionary<NetworkConnection, ClientData>();
+        private readonly SyncDictionary<int, ClientData> _map = new SyncDictionary<int, ClientData>();
 
-        private ILogService _logService;
+        public ClientData Get(int id) => _map[id];
 
-        [Inject]
-        private void Constructor(ILogService logService)
-        {
-            _logService = logService;
-        }
+        public void Add(int id, ClientData clientData) => AddServer(id, clientData);
 
-        public override void OnStartServer()
-        {
-            base.OnStartServer();
+        public void Remove(int id) => RemoveServer(id);
 
-            InstanceFinder.ServerManager.OnRemoteConnectionState += OnRemoteConnectionStateChanged;
-        }
+        public void Clear() => ClearServer();
 
-        public override void OnStopServer()
-        {
-            base.OnStopServer();
+        [ServerRpc(RequireOwnership = false)]
+        private void AddServer(int id, ClientData clientData) => _map.Add(id, clientData);
 
-            InstanceFinder.ServerManager.OnRemoteConnectionState -= OnRemoteConnectionStateChanged;
-            Map.Clear();
-        }
+        [ServerRpc(RequireOwnership = false)]
+        private void RemoveServer(int id) => _map.Remove(id);
 
-        private void OnRemoteConnectionStateChanged(NetworkConnection connection, RemoteConnectionStateArgs state)
-        {
-            if (state.ConnectionState == RemoteConnectionState.Started)
-            {
-                _logService.Log("Client connected");
-                Map.Add(connection, new ClientData());
-                _logService.Log("Client data created");
-            }
-            else if (state.ConnectionState == RemoteConnectionState.Stopped)
-            {
-                _logService.Log("Client disconnected");
-                Map.Remove(connection);
-                _logService.Log("Client data removed");
-            }
-        }
-
-        public ClientData Get(NetworkConnection connection) => Map[connection];
-
-        public void Dirty(NetworkConnection connection) => Map.Dirty(connection);
+        [ServerRpc(RequireOwnership = false)]
+        private void ClearServer() => _map.Clear();
     }
 }
