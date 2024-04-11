@@ -105,9 +105,9 @@ namespace Main.Entities.Player
 
         private Vector3 GetShootDirection()
         {
-            Vector3 direction = _camera.transform.forward;
-
             Transform cameraTransform = _camera.transform;
+
+            Vector3 direction = cameraTransform.forward;
 
             float GetRandomAngle() => Random.Range(-_maxAngleDeviation, _maxAngleDeviation);
 
