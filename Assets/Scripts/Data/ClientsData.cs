@@ -15,6 +15,8 @@ namespace Data
 
         public void Clear() => ClearServer();
 
+        public bool HasKey(int id) => _map.ContainsKey(id);
+
         [ServerRpc(RequireOwnership = false)]
         private void AddServer(int id, ClientData clientData) => _map.Add(id, clientData);
 

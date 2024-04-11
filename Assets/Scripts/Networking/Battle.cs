@@ -72,7 +72,9 @@ namespace Networking
 
         public void Join()
         {
-            if (_joined || _isConnectedToServer == false)
+            if (_joined ||
+                _isConnectedToServer == false ||
+                _clientsData.HasKey(InstanceFinder.ClientManager.Connection.ClientId) == false)
                 return;
 
             _crosshair.Enabled = true;
