@@ -9,9 +9,9 @@ using Infrastructure.Data.Static.Core;
 using Infrastructure.Services.Log.Core;
 using Infrastructure.Services.StaticData.Core;
 using Map;
+using Networking.Messaging.Chat;
 using UI;
 using UI.Buttons;
-using UI.Chat;
 using UnityEngine;
 using Zenject;
 
@@ -83,7 +83,7 @@ namespace Networking
             Cursor.lockState = CursorLockMode.Locked;
             _joinBattleButton.Interactable = false;
             _leaveBattleButton.Interactable = true;
-            SendMessageFromClient("joined the battle");
+            _chat.SendMessage("joined the battle");
             SpawnPlayer();
 
             _logService.Log("Joined battle");
@@ -101,8 +101,7 @@ namespace Networking
             _cursorLocker.Enabled = false;
             Cursor.lockState = CursorLockMode.None;
             _joinBattleButton.Interactable = true;
-            _leaveBattleButton.Interactable = false;
-            SendMessageFromClient("left the battle");
+            _chat.SendMessage("left the battle");
             DespawnPlayer();
 
             _logService.Log("Left battle");
@@ -132,16 +131,6 @@ namespace Networking
             _idPlayerObjectMap.Remove(connection.ClientId);
 
             Despawn(playerObject);
-        }
-
-        private void SendMessageFromClient(string text)
-        {
-            Message message = new Message
-            {
-                Username = _clientsData.Get(InstanceFinder.ClientManager.Connection.ClientId).Username, Content = text
-            };
-
-            _chat.SendMessage(message);
         }
     }
 }

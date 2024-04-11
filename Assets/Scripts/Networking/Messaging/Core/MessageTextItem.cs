@@ -2,7 +2,7 @@ using Extensions;
 using TMPro;
 using UnityEngine;
 
-namespace UI.Chat
+namespace Networking.Messaging.Core
 {
     public class MessageTextItem : MonoBehaviour
     {

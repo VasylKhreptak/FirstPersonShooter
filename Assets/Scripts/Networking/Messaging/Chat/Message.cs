@@ -1,6 +1,6 @@
 using FishNet.Broadcast;
 
-namespace UI.Chat
+namespace Networking.Messaging.Chat
 {
     public struct Message : IBroadcast
     {

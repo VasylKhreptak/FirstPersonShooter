@@ -795,6 +795,7 @@ GameObject:
   - component: {fileID: 123852316}
   - component: {fileID: 123852317}
   - component: {fileID: 123852318}
+  - component: {fileID: 123852319}
   m_Layer: 5
   m_Name: Chatbox
   m_TagString: Untagged
@@ -846,7 +847,7 @@ MonoBehaviour:
   m_ChildControlHeight: 0
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
-  m_ReverseArrangement: 1
+  m_ReverseArrangement: 0
 --- !u!114 &123852318
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -861,6 +862,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_HorizontalFit: 0
   m_VerticalFit: 2
+--- !u!114 &123852319
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 123852315}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 899362e4e3f44d2dbea80de671976604, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _textPrefab: {fileID: 9069120125058049495, guid: 5005e0d2b79037842a46b525246dbb77, type: 3}
+  _maxMessages: 10
 --- !u!1001 &138740811
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7949,6 +7964,7 @@ GameObject:
   - component: {fileID: 1625992943}
   - component: {fileID: 1625992942}
   - component: {fileID: 1625992941}
+  - component: {fileID: 1625992944}
   m_Layer: 5
   m_Name: InputField (TMP)
   m_TagString: Untagged
@@ -8112,6 +8128,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1625992939}
   m_CullTransparentMesh: 1
+--- !u!114 &1625992944
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1625992939}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa5aed8da58c46c9ac90728bc7eafd7d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _inputField: {fileID: 1625992941}
 --- !u!1001 &1626346175
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8983,10 +9012,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8dd7315bd4104b38937823b503c3d726, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _messageBoxTransform: {fileID: 123852316}
-  _inputField: {fileID: 1625992941}
-  _messageTextPrefab: {fileID: 9069120125058049495, guid: 5005e0d2b79037842a46b525246dbb77, type: 3}
-  _maxMessages: 10
+  _messageBox: {fileID: 123852319}
 --- !u!1001 &1844474082
 PrefabInstance:
   m_ObjectHideFlags: 0
