@@ -2,6 +2,7 @@
 {
     public enum Prefab
     {
-        Player = 0
+        Player = 0,
+        BulletDecal = 1
     }
 }

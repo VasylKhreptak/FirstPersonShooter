@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Data;
 using Graphics;
+using Infrastructure.Services.ClientSideSpawn;
 using Map;
 using Networking;
 using Networking.KillsBox;
@@ -28,6 +29,7 @@ namespace Main.Zenject
         [SerializeField] private LeaveBattleButton _leaveBattleButton;
         [SerializeField] private HitIndicator _hitIndicator;
         [SerializeField] private KillsBox _killsBox;
+        [SerializeField] private ClientSideSpawnService _clientSideSpawnService;
 
         [Header("Preferences")]
         [SerializeField] private List<Transform> _playerSpawnPoints;
@@ -47,6 +49,7 @@ namespace Main.Zenject
             _leaveBattleButton ??= FindObjectOfType<LeaveBattleButton>(true);
             _hitIndicator ??= FindObjectOfType<HitIndicator>(true);
             _killsBox ??= FindObjectOfType<KillsBox>(true);
+            _clientSideSpawnService ??= FindObjectOfType<ClientSideSpawnService>(true);
         }
 
         #endregion
@@ -67,6 +70,7 @@ namespace Main.Zenject
             Container.BindInstance(_leaveBattleButton).AsSingle();
             Container.BindInstance(_hitIndicator).AsSingle();
             Container.BindInstance(_killsBox).AsSingle();
+            Container.BindInstance(_clientSideSpawnService).AsSingle();
         }
     }
 }

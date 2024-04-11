@@ -1,6 +1,5 @@
 using System;
 using Data;
-using FishNet;
 using FishNet.Object;
 using Networking.Messaging.Chat;
 using UI.Buttons;
@@ -59,18 +58,20 @@ namespace Networking
         private void CreateClientDataDelayed()
         {
             Observable
-                .Timer(TimeSpan.FromSeconds(0.3f))
+                .Timer(TimeSpan.FromSeconds(0.1f))
                 .Subscribe(_ => CreateClientData());
         }
 
         private void CreateClientData()
         {
+            int id = LocalConnection.ClientId;
+
             ClientData clientData = new ClientData
             {
                 Username = _usernameInputField.Text
             };
 
-            _clientsData.Add(InstanceFinder.ClientManager.Connection.ClientId, clientData);
+            _clientsData.Add(id, clientData);
         }
     }
 }

@@ -101,6 +101,7 @@ namespace Networking
             _cursorLocker.Enabled = false;
             Cursor.lockState = CursorLockMode.None;
             _joinBattleButton.Interactable = true;
+            _leaveBattleButton.Interactable = false;
             _chat.SendMessage("left the battle");
             DespawnPlayer();
 
