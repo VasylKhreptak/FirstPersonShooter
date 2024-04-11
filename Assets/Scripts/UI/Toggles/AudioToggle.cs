@@ -12,7 +12,11 @@ namespace UI.Toggles
 
         private void OnValidate() => _toggle ??= GetComponent<Toggle>();
 
-        private void OnEnable() => _toggle.onValueChanged.AddListener(ToggleAudio);
+        private void OnEnable()
+        {
+            ToggleAudio(_toggle.isOn);
+            _toggle.onValueChanged.AddListener(ToggleAudio);
+        }
 
         private void OnDisable() => _toggle.onValueChanged.RemoveListener(ToggleAudio);
 

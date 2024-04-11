@@ -5590,7 +5590,7 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_IsOn: 0
+  m_IsOn: 1
 --- !u!114 &1175936688
 MonoBehaviour:
   m_ObjectHideFlags: 0

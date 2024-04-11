@@ -1,9 +1,11 @@
 using FishNet.Object;
 using Infrastructure.Services.Log.Core;
 using Main.Health;
+using Networking;
 using Serialization.MinMax;
 using UI;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Zenject;
 
 namespace Main.Entities.Player
@@ -12,6 +14,7 @@ namespace Main.Entities.Player
     {
         [Header("References")]
         [SerializeField] private Camera _camera;
+        [SerializeField] private NetworkAudio _fireAudio;
 
         [Header("Preferences")]
         [SerializeField] private float _interval = 0.07f;
@@ -60,6 +63,8 @@ namespace Main.Entities.Player
 
         private void Shoot()
         {
+            _fireAudio.Play();
+
             Transform cameraTransform = _camera.transform;
             Ray ray = new Ray(cameraTransform.position, cameraTransform.forward);
 
