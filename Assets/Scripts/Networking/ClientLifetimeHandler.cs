@@ -18,10 +18,11 @@ namespace Networking
         private Battle _battle;
         private JoinBattleButton _joinBattleButton;
         private LeaveBattleButton _leaveBattleButton;
+        private KillsBox.KillsBox _killsBox;
 
         [Inject]
         private void Constructor(Chat chat, ClientsData clientsData, UsernameInputField usernameInputField, Battle battle,
-            JoinBattleButton joinBattleButton, LeaveBattleButton leaveBattleButton)
+            JoinBattleButton joinBattleButton, LeaveBattleButton leaveBattleButton, KillsBox.KillsBox killsBox)
         {
             _chat = chat;
             _clientsData = clientsData;
@@ -29,6 +30,7 @@ namespace Networking
             _battle = battle;
             _joinBattleButton = joinBattleButton;
             _leaveBattleButton = leaveBattleButton;
+            _killsBox = killsBox;
         }
 
         public override void OnStartClient()
@@ -39,6 +41,7 @@ namespace Networking
             _chat.Enabled = true;
             _usernameInputField.Interactable = false;
             _joinBattleButton.Interactable = true;
+            _killsBox.Enabled = true;
         }
 
         public override void OnStopClient()
@@ -50,6 +53,7 @@ namespace Networking
             _usernameInputField.Interactable = true;
             _joinBattleButton.Interactable = false;
             _leaveBattleButton.Interactable = false;
+            _killsBox.Enabled = false;
         }
 
         private void CreateClientDataDelayed()

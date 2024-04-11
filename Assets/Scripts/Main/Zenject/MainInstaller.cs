@@ -3,6 +3,7 @@ using Data;
 using Graphics;
 using Map;
 using Networking;
+using Networking.KillsBox;
 using Networking.Messaging.Chat;
 using UI;
 using UI.Buttons;
@@ -26,6 +27,7 @@ namespace Main.Zenject
         [SerializeField] private JoinBattleButton _joinBattleButton;
         [SerializeField] private LeaveBattleButton _leaveBattleButton;
         [SerializeField] private HitIndicator _hitIndicator;
+        [SerializeField] private KillsBox _killsBox;
 
         [Header("Preferences")]
         [SerializeField] private List<Transform> _playerSpawnPoints;
@@ -44,6 +46,7 @@ namespace Main.Zenject
             _joinBattleButton ??= FindObjectOfType<JoinBattleButton>(true);
             _leaveBattleButton ??= FindObjectOfType<LeaveBattleButton>(true);
             _hitIndicator ??= FindObjectOfType<HitIndicator>(true);
+            _killsBox ??= FindObjectOfType<KillsBox>(true);
         }
 
         #endregion
@@ -63,6 +66,7 @@ namespace Main.Zenject
             Container.BindInstance(_joinBattleButton).AsSingle();
             Container.BindInstance(_leaveBattleButton).AsSingle();
             Container.BindInstance(_hitIndicator).AsSingle();
+            Container.BindInstance(_killsBox).AsSingle();
         }
     }
 }

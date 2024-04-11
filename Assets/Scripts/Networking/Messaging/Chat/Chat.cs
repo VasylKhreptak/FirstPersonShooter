@@ -49,7 +49,7 @@ namespace Networking.Messaging.Chat
 
         private void OnClientReceivedMessage(Message message, Channel _) => DrawMessage(message);
 
-        private void OnServerReceivedMessage(NetworkConnection connection, Message message, Channel channel) =>
+        private void OnServerReceivedMessage(NetworkConnection connection, Message message, Channel _) =>
             InstanceFinder.ServerManager.Broadcast(message);
 
         private void DrawMessage(Message message)

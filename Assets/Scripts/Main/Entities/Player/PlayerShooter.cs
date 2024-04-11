@@ -1,11 +1,13 @@
+using Data;
+using FishNet;
 using FishNet.Object;
 using Infrastructure.Services.Log.Core;
-using Main.Health;
+using Main.Health.Damages;
 using Networking;
 using Serialization.MinMax;
 using UI;
 using UnityEngine;
-using UnityEngine.Serialization;
+using Visitor;
 using Zenject;
 
 namespace Main.Entities.Player
@@ -22,12 +24,14 @@ namespace Main.Entities.Player
 
         private ILogService _logService;
         private HitIndicator _hitIndicator;
+        private ClientsData _clientsData;
 
         [Inject]
-        private void Constructor(ILogService logService, HitIndicator hitIndicator)
+        private void Constructor(ILogService logService, HitIndicator hitIndicator, ClientsData clientsData)
         {
             _logService = logService;
             _hitIndicator = hitIndicator;
+            _clientsData = clientsData;
         }
 
         private float _time;
@@ -73,14 +77,14 @@ namespace Main.Entities.Player
 
             _logService.Log("Hit GameObject: " + hitInfo.collider.gameObject.name);
 
-            if (hitInfo.collider.TryGetComponent(out IDamageable damageable))
-                damageable.TakeDamage(_damage.Random());
-
-            if (hitInfo.collider.TryGetComponent(out Player player))
+            if (hitInfo.collider.TryGetComponent(out IVisitable<PlayerDamage> visitable))
             {
+                PlayerDamage playerDamage = new PlayerDamage(GetUsername(), _damage.Random());
+                visitable.Accept(playerDamage);
                 _hitIndicator.Trigger();
-                _logService.Log($"Hit player with username: {player.GetUsername()}");
             }
         }
+
+        private string GetUsername() => _clientsData.Get(InstanceFinder.ClientManager.Connection.ClientId).Username;
     }
 }

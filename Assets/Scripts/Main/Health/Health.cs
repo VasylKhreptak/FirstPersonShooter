@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Main.Health
 {
-    public class Health : NetworkBehaviour, IDamageable
+    public class Health : NetworkBehaviour
     {
         [Header("Preferences")]
         [SerializeField] private float _initialValue = 100f;
@@ -42,10 +42,8 @@ namespace Main.Health
             _value.Value = value;
         }
 
-        public void TakeDamage(float damage) => TakeDamageServer(damage);
-
         [ServerRpc(RequireOwnership = false)]
-        private void TakeDamageServer(float damage)
+        public void TakeDamage(float damage)
         {
             damage = Mathf.Clamp(damage, 0f, _syncVar.Value);
             _syncVar.Value -= damage;
