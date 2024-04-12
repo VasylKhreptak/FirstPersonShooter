@@ -32,6 +32,7 @@ namespace Main.Zenject
         [SerializeField] private KillsBox _killsBox;
         [SerializeField] private ClientSideSpawnService _clientSideSpawnService;
         [SerializeField] private AudioService _audioService;
+        [SerializeField] private HealthView _healthView;
 
         [Header("Preferences")]
         [SerializeField] private List<Transform> _playerSpawnPoints;
@@ -53,6 +54,7 @@ namespace Main.Zenject
             _killsBox ??= FindObjectOfType<KillsBox>(true);
             _clientSideSpawnService ??= FindObjectOfType<ClientSideSpawnService>(true);
             _audioService ??= FindObjectOfType<AudioService>(true);
+            _healthView ??= FindObjectOfType<HealthView>(true);
         }
 
         #endregion
@@ -75,6 +77,7 @@ namespace Main.Zenject
             Container.BindInstance(_killsBox).AsSingle();
             Container.BindInstance(_clientSideSpawnService).AsSingle();
             Container.BindInstance(_audioService).AsSingle();
+            Container.BindInstance(_healthView).AsSingle();
         }
     }
 }

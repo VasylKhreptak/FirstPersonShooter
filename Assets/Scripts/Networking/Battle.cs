@@ -29,11 +29,12 @@ namespace Networking
         private LeaveBattleButton _leaveBattleButton;
         private Chat _chat;
         private ClientsData _clientsData;
+        private HealthView _healthView;
 
         [Inject]
         private void Constructor(IStaticDataService staticDataService, Crosshair crosshair, PlayerSpawnPoints spawnPoints,
             MapCamera mapCamera, CursorLocker cursorLocker, ILogService logService, JoinBattleButton joinBattleButton,
-            LeaveBattleButton leaveBattleButton, Chat chat, ClientsData clientsData)
+            LeaveBattleButton leaveBattleButton, Chat chat, ClientsData clientsData, HealthView healthView)
         {
             _staticDataService = staticDataService;
             _crosshair = crosshair;
@@ -45,6 +46,7 @@ namespace Networking
             _leaveBattleButton = leaveBattleButton;
             _chat = chat;
             _clientsData = clientsData;
+            _healthView = healthView;
         }
 
         private bool _joined;
@@ -83,9 +85,11 @@ namespace Networking
             Cursor.lockState = CursorLockMode.Locked;
             _joinBattleButton.Interactable = false;
             _leaveBattleButton.Interactable = true;
-            _chat.SendMessage("joined the battle");
+            _healthView.Enabled = true;
+            _healthView.SetHealthFill(1f);
             SpawnPlayer();
 
+            _chat.SendMessage("joined the battle");
             _logService.Log("Joined battle");
 
             _joined = true;
@@ -102,9 +106,10 @@ namespace Networking
             Cursor.lockState = CursorLockMode.None;
             _joinBattleButton.Interactable = true;
             _leaveBattleButton.Interactable = false;
-            _chat.SendMessage("left the battle");
+            _healthView.Enabled = false;
             DespawnPlayer();
 
+            _chat.SendMessage("left the battle");
             _logService.Log("Left battle");
 
             _joined = false;
