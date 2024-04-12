@@ -30,17 +30,11 @@ namespace Main.Health
             _syncVar.OnChange += OnHealthChanged;
         }
 
-        private void OnDestroy()
-        {
-            _syncVar.OnChange -= OnHealthChanged;
-        }
+        private void OnDestroy() => _syncVar.OnChange -= OnHealthChanged;
 
         #endregion
 
-        private void OnHealthChanged(float previous, float value, bool isServer)
-        {
-            _value.Value = value;
-        }
+        private void OnHealthChanged(float previous, float value, bool isServer) => _value.Value = value;
 
         [ServerRpc(RequireOwnership = false)]
         public void TakeDamage(float damage)
