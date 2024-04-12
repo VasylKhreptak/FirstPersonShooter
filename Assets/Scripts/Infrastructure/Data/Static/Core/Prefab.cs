@@ -3,6 +3,6 @@
     public enum Prefab
     {
         Player = 0,
-        BulletDecal = 1
+        StoneImpactParticle = 1
     }
 }

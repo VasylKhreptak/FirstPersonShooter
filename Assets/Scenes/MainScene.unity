@@ -9357,9 +9357,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b595b69d80bb4023a61b5f1eabcffd24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _componentIndexCache: 255
+  _componentIndexCache: 5
   _addedNetworkObject: {fileID: 1967716037}
-  _networkObjectCache: {fileID: 0}
+  _networkObjectCache: {fileID: 1967716037}
   _audioSourcePrefab: {fileID: 6887687202610085997, guid: f7adc868ce1b691449093dbbc194f32f, type: 3}
 --- !u!1001 &1767753695
 PrefabInstance:
@@ -10558,6 +10558,7 @@ MonoBehaviour:
   - {fileID: 2070623762}
   - {fileID: 1402720736}
   - {fileID: 745526051}
+  - {fileID: 1753180177}
   <SerializedRootNetworkBehaviour>k__BackingField: {fileID: 0}
   <NestedRootNetworkBehaviours>k__BackingField: []
   SerializedTransformProperties:

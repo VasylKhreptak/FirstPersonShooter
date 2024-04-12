@@ -103,7 +103,7 @@ namespace Main.Entities.Player
         private void SpawnDecal(RaycastHit hitInfo)
         {
             Quaternion rotation = Quaternion.LookRotation(hitInfo.normal);
-            _clientSideSpawnService.Spawn(Prefab.BulletDecal, hitInfo.point + hitInfo.normal * 0.01f, rotation);
+            _clientSideSpawnService.Spawn(Prefab.StoneImpactParticle, hitInfo.point + hitInfo.normal * 0.01f, rotation);
         }
 
         private Vector3 GetShootDirection()
