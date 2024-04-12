@@ -82,6 +82,8 @@ namespace Main.Entities.Player
 
             _audioService.Play(AudioType.RifleFire, _bulletSpawnPoint.position);
 
+            SpawnShootParticle();
+
             if (Physics.Raycast(ray, out RaycastHit hitInfo) == false)
                 return;
 
@@ -124,5 +126,8 @@ namespace Main.Entities.Player
         }
 
         private void PlayHitSound(RaycastHit hitInfo) => _audioService.Play(AudioType.ConcreteImpact, hitInfo.point);
+
+        private void SpawnShootParticle() =>
+            _clientSideSpawnService.Spawn(Prefab.FireFlashParticle, _bulletSpawnPoint.position, _bulletSpawnPoint.rotation);
     }
 }

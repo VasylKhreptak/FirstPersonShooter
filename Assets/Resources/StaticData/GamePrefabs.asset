@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: GamePrefabs
   m_EditorClassIdentifier: 
   _prefabs:
-    _keys: 0000000001000000
+    _keys: 000000000100000002000000
     _values:
     - {fileID: 8625294241268547127, guid: 576573831d6c8604cbfeb7098a22195e, type: 3}
     - {fileID: 3879774709186136084, guid: 3f47fb276b0214144875879eeb40b6df, type: 3}
+    - {fileID: 8402463803306149752, guid: 95ab1f87ce805d444beacf8ea09cf1b6, type: 3}
