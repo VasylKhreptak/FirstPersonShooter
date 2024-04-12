@@ -13,12 +13,27 @@ MonoBehaviour:
   m_Name: GameAudioConfig
   m_EditorClassIdentifier: 
   _audioConfigs:
-    _keys: 00000000
+    _keys: 0000000001000000
     _values:
     - _clips:
       - {fileID: 8300000, guid: b4b174a846feb61418df1ba86b1c7ae9, type: 3}
       _settings:
-        _spatialBlend: 1
+        _spatialBlendLocal: 0
+        _spatialBlendClients: 1
         _rolloffMode: 1
         _minDistance: 1
-        _maxDistance: 50
+        _maxDistance: 30
+    - _clips:
+      - {fileID: 8300000, guid: 6e0718021a76d12418e7ee8efd46fd7d, type: 3}
+      - {fileID: 8300000, guid: edc6f2566923d9941be7f7f3e2406420, type: 3}
+      - {fileID: 8300000, guid: 9a2fc53f789eea946b9840938eb58ebc, type: 3}
+      - {fileID: 8300000, guid: 6e45c4cf05264b8449fd803d61b81e60, type: 3}
+      - {fileID: 8300000, guid: adf060616c4d28d4a8a906a39895d386, type: 3}
+      - {fileID: 8300000, guid: 5351edd79b3947946be3ada030c4713a, type: 3}
+      - {fileID: 8300000, guid: b7947b29f40ae9d40b5cfe61fadfc7e6, type: 3}
+      _settings:
+        _spatialBlendLocal: 1
+        _spatialBlendClients: 1
+        _rolloffMode: 1
+        _minDistance: 1
+        _maxDistance: 10

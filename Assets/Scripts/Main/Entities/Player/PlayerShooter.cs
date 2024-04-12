@@ -86,7 +86,10 @@ namespace Main.Entities.Player
                 return;
 
             if (_bulletDecalLayerMask.ContainsLayer(hitInfo.collider.gameObject.layer))
+            {
                 SpawnDecal(hitInfo);
+                PlayHitSound(hitInfo);
+            }
 
             _logService.Log("Hit GameObject: " + hitInfo.collider.gameObject.name);
 
@@ -119,5 +122,7 @@ namespace Main.Entities.Player
 
             return direction;
         }
+
+        private void PlayHitSound(RaycastHit hitInfo) => _audioService.Play(AudioType.ConcreteImpact, hitInfo.point);
     }
 }
