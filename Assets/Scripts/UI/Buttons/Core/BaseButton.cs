@@ -6,7 +6,8 @@ namespace UI.Buttons.Core
     public abstract class BaseButton : MonoBehaviour
     {
         [Header("References")]
-        [SerializeField] Button _button;
+        [SerializeField]
+        private Button _button;
 
         protected Button Button => _button;
 

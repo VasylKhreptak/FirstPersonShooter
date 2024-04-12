@@ -8,5 +8,6 @@ namespace Infrastructure.Services.StaticData.Core
         public GameConfig Config { get; }
         public GameBalance Balance { get; }
         public GamePrefabs Prefabs { get; }
+        public GameAudioConfig AudioConfig { get; }
     }
 }

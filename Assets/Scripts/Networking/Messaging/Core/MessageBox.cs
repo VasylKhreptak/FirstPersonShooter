@@ -28,7 +28,9 @@ namespace Networking.Messaging.Core
             Transform[] messages = transform.GetChildren();
 
             foreach (Transform message in messages)
+            {
                 Destroy(message.gameObject);
+            }
         }
     }
 }

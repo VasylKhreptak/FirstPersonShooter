@@ -3,15 +3,16 @@ using Extensions;
 using FishNet;
 using FishNet.Object;
 using Infrastructure.Data.Static.Core;
+using Infrastructure.Services.Audio;
 using Infrastructure.Services.ClientSideSpawn;
 using Infrastructure.Services.Log.Core;
 using Main.Health.Damages;
-using Networking;
 using Serialization.MinMax;
 using UI;
 using UnityEngine;
 using Visitor;
 using Zenject;
+using AudioType = Infrastructure.Data.Static.Core.AudioType;
 
 namespace Main.Entities.Player
 {
@@ -19,9 +20,9 @@ namespace Main.Entities.Player
     {
         [Header("References")]
         [SerializeField] private Camera _camera;
-        [SerializeField] private NetworkAudio _fireAudio;
 
         [Header("Preferences")]
+        [SerializeField] private Transform _bulletSpawnPoint;
         [SerializeField] private float _interval = 0.07f;
         [SerializeField] private float _maxAngleDeviation = 1f;
         [SerializeField] private LayerMask _bulletDecalLayerMask;
@@ -31,15 +32,17 @@ namespace Main.Entities.Player
         private HitIndicator _hitIndicator;
         private ClientsData _clientsData;
         private ClientSideSpawnService _clientSideSpawnService;
+        private AudioService _audioService;
 
         [Inject]
         private void Constructor(ILogService logService, HitIndicator hitIndicator, ClientsData clientsData,
-            ClientSideSpawnService clientSideSpawnService)
+            ClientSideSpawnService clientSideSpawnService, AudioService audioService)
         {
             _logService = logService;
             _hitIndicator = hitIndicator;
             _clientsData = clientsData;
             _clientSideSpawnService = clientSideSpawnService;
+            _audioService = audioService;
         }
 
         private float _time;
@@ -75,9 +78,9 @@ namespace Main.Entities.Player
 
         private void Shoot()
         {
-            _fireAudio.Play();
-
             Ray ray = new Ray(_camera.transform.position, GetShootDirection());
+
+            _audioService.Play(AudioType.RifleFire, _bulletSpawnPoint.position);
 
             if (Physics.Raycast(ray, out RaycastHit hitInfo) == false)
                 return;

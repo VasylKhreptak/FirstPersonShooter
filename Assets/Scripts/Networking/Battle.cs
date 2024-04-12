@@ -50,7 +50,7 @@ namespace Networking
         private bool _joined;
         private bool _isConnectedToServer;
 
-        private Dictionary<int, GameObject> _idPlayerObjectMap = new Dictionary<int, GameObject>();
+        private readonly Dictionary<int, GameObject> _idPlayerObjectMap = new Dictionary<int, GameObject>();
 
         #region Networking
 

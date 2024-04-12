@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Data;
 using Graphics;
+using Infrastructure.Services.Audio;
 using Infrastructure.Services.ClientSideSpawn;
 using Map;
 using Networking;
@@ -30,6 +31,7 @@ namespace Main.Zenject
         [SerializeField] private HitIndicator _hitIndicator;
         [SerializeField] private KillsBox _killsBox;
         [SerializeField] private ClientSideSpawnService _clientSideSpawnService;
+        [SerializeField] private AudioService _audioService;
 
         [Header("Preferences")]
         [SerializeField] private List<Transform> _playerSpawnPoints;
@@ -50,6 +52,7 @@ namespace Main.Zenject
             _hitIndicator ??= FindObjectOfType<HitIndicator>(true);
             _killsBox ??= FindObjectOfType<KillsBox>(true);
             _clientSideSpawnService ??= FindObjectOfType<ClientSideSpawnService>(true);
+            _audioService ??= FindObjectOfType<AudioService>(true);
         }
 
         #endregion
@@ -71,6 +74,7 @@ namespace Main.Zenject
             Container.BindInstance(_hitIndicator).AsSingle();
             Container.BindInstance(_killsBox).AsSingle();
             Container.BindInstance(_clientSideSpawnService).AsSingle();
+            Container.BindInstance(_audioService).AsSingle();
         }
     }
 }
