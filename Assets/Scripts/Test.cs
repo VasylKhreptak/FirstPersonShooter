@@ -6,9 +6,4 @@ public class Test : NetworkBehaviour
     {
         base.OnStartClient();
     }
-    
-    private void TestMethod()
-    {
-        
-    }
 }

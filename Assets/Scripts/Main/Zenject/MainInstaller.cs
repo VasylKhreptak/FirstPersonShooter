@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Data;
+using FishNet.Discovery;
 using Graphics;
 using Infrastructure.Services.Audio;
 using Infrastructure.Services.ClientSideSpawn;
@@ -33,6 +34,7 @@ namespace Main.Zenject
         [SerializeField] private ClientSideSpawnService _clientSideSpawnService;
         [SerializeField] private AudioService _audioService;
         [SerializeField] private HealthView _healthView;
+        [SerializeField] private NetworkDiscovery _networkDiscovery;
 
         [Header("Preferences")]
         [SerializeField] private List<Transform> _playerSpawnPoints;
@@ -55,6 +57,7 @@ namespace Main.Zenject
             _clientSideSpawnService ??= FindObjectOfType<ClientSideSpawnService>(true);
             _audioService ??= FindObjectOfType<AudioService>(true);
             _healthView ??= FindObjectOfType<HealthView>(true);
+            _networkDiscovery ??= FindObjectOfType<NetworkDiscovery>(true);
         }
 
         #endregion
@@ -78,6 +81,7 @@ namespace Main.Zenject
             Container.BindInstance(_clientSideSpawnService).AsSingle();
             Container.BindInstance(_audioService).AsSingle();
             Container.BindInstance(_healthView).AsSingle();
+            Container.BindInstance(_networkDiscovery).AsSingle();
         }
     }
 }
