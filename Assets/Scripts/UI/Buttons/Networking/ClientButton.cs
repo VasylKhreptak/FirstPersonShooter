@@ -109,6 +109,7 @@ namespace UI.Buttons.Networking
                     break;
                 case LocalConnectionState.Stopped:
                     _indicator.color = _disabledColor;
+                    _isActive = false;
                     break;
                 case LocalConnectionState.Starting:
                 case LocalConnectionState.Stopping:
