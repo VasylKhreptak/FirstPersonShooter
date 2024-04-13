@@ -1,8 +1,13 @@
+using System.Net;
 using FishNet;
+using FishNet.Discovery;
 using FishNet.Transporting;
 using UI.Buttons.Core;
+using UI.Dropdowns;
+using UI.InputFields;
 using UnityEngine;
 using UnityEngine.UI;
+using Zenject;
 
 namespace UI.Buttons.Networking
 {
@@ -16,13 +21,26 @@ namespace UI.Buttons.Networking
         [SerializeField] private Color _intermediateColor;
         [SerializeField] private Color _disabledColor;
 
+        private ConnectionDropdown _connectionDropdown;
+        private NetworkDiscovery _networkDiscovery;
+        private AddressInputField _addressInputField;
+
+        [Inject]
+        private void Constructor(ConnectionDropdown connectionDropdown, NetworkDiscovery networkDiscovery,
+            AddressInputField addressInputField)
+        {
+            _connectionDropdown = connectionDropdown;
+            _networkDiscovery = networkDiscovery;
+            _addressInputField = addressInputField;
+        }
+
         private bool _isActive;
 
         #region MonoBehaviour
 
         private void Awake()
         {
-            UpdateIndicatorColor(LocalConnectionState.Stopped);
+            OnConnectionStateChanged(LocalConnectionState.Stopped);
         }
 
         protected override void OnEnable()
@@ -53,22 +71,41 @@ namespace UI.Buttons.Networking
 
             if (_isActive)
             {
-                InstanceFinder.ClientManager.StartConnection();
+                TryConnect();
+
                 return;
             }
 
+            _networkDiscovery.StopSearchingOrAdvertising();
             InstanceFinder.ClientManager.StopConnection();
         }
 
-        private void OnClientConnectionStateChanged(ClientConnectionStateArgs statusArgs) =>
-            UpdateIndicatorColor(statusArgs.ConnectionState);
+        private void TryConnect()
+        {
+            if (_connectionDropdown.Value == 0)
+            {
+                InstanceFinder.ClientManager.StartConnection("localhost");
 
-        private void UpdateIndicatorColor(LocalConnectionState connectionState)
+                StartSearchingServer();
+                return;
+            }
+
+            if (IPAddress.TryParse(_addressInputField.Text, out IPAddress _))
+                InstanceFinder.ClientManager.StartConnection(_addressInputField.Text);
+            else
+                Debug.LogError("Invalid IP address: " + _addressInputField.Text);
+        }
+
+        private void OnClientConnectionStateChanged(ClientConnectionStateArgs statusArgs) =>
+            OnConnectionStateChanged(statusArgs.ConnectionState);
+
+        private void OnConnectionStateChanged(LocalConnectionState connectionState)
         {
             switch (connectionState)
             {
                 case LocalConnectionState.Started:
                     _indicator.color = _enabledColor;
+                    StopSearchingServer();
                     break;
                 case LocalConnectionState.Stopped:
                     _indicator.color = _disabledColor;
@@ -79,5 +116,17 @@ namespace UI.Buttons.Networking
                     break;
             }
         }
+
+        private void StartSearchingServer()
+        {
+            StopSearchingServer();
+
+            _networkDiscovery.ServerFoundCallback += OnServerFound;
+        }
+
+        private void StopSearchingServer() => _networkDiscovery.ServerFoundCallback -= OnServerFound;
+
+        private void OnServerFound(IPEndPoint ipEndPoint) =>
+            InstanceFinder.ClientManager.StartConnection(ipEndPoint.Address.ToString());
     }
 }

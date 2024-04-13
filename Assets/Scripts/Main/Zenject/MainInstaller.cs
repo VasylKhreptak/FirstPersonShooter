@@ -10,6 +10,8 @@ using Networking.KillsBox;
 using Networking.Messaging.Chat;
 using UI;
 using UI.Buttons;
+using UI.Dropdowns;
+using UI.InputFields;
 using UI.InputFields.Username;
 using UnityEngine;
 using Zenject;
@@ -35,6 +37,8 @@ namespace Main.Zenject
         [SerializeField] private AudioService _audioService;
         [SerializeField] private HealthView _healthView;
         [SerializeField] private NetworkDiscovery _networkDiscovery;
+        [SerializeField] private ConnectionDropdown _connectionDropdown;
+        [SerializeField] private AddressInputField _addressInputField;
 
         [Header("Preferences")]
         [SerializeField] private List<Transform> _playerSpawnPoints;
@@ -58,6 +62,8 @@ namespace Main.Zenject
             _audioService ??= FindObjectOfType<AudioService>(true);
             _healthView ??= FindObjectOfType<HealthView>(true);
             _networkDiscovery ??= FindObjectOfType<NetworkDiscovery>(true);
+            _connectionDropdown ??= FindObjectOfType<ConnectionDropdown>(true);
+            _addressInputField ??= FindObjectOfType<AddressInputField>(true);
         }
 
         #endregion
@@ -82,6 +88,8 @@ namespace Main.Zenject
             Container.BindInstance(_audioService).AsSingle();
             Container.BindInstance(_healthView).AsSingle();
             Container.BindInstance(_networkDiscovery).AsSingle();
+            Container.BindInstance(_connectionDropdown).AsSingle();
+            Container.BindInstance(_addressInputField).AsSingle();
         }
     }
 }
