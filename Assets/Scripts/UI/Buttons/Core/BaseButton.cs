@@ -6,18 +6,17 @@ namespace UI.Buttons.Core
     public abstract class BaseButton : MonoBehaviour
     {
         [Header("References")]
-        [SerializeField]
-        private Button _button;
+        [SerializeField] private Button _button;
 
         protected Button Button => _button;
 
         #region MonoBehaviour
 
-        private void OnValidate() => _button ??= GetComponent<Button>();
+        protected virtual void OnValidate() => _button ??= GetComponent<Button>();
 
-        private void OnEnable() => _button.onClick.AddListener(OnClicked);
+        protected virtual void OnEnable() => _button.onClick.AddListener(OnClicked);
 
-        private void OnDisable() => _button.onClick.RemoveListener(OnClicked);
+        protected virtual void OnDisable() => _button.onClick.RemoveListener(OnClicked);
 
         #endregion
 
