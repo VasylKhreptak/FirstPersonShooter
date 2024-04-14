@@ -3,13 +3,15 @@ using Data;
 using FishNet.Object;
 using Networking.Messaging.Chat;
 using UI.Buttons;
+using UI.Dropdowns;
+using UI.InputFields;
 using UI.InputFields.Username;
 using UniRx;
 using Zenject;
 
 namespace Networking
 {
-    public class ClientLifetimeHandler : NetworkBehaviour
+    public class ClientLifetimeProcessor : NetworkBehaviour
     {
         private Chat _chat;
         private ClientsData _clientsData;
@@ -18,10 +20,13 @@ namespace Networking
         private JoinBattleButton _joinBattleButton;
         private LeaveBattleButton _leaveBattleButton;
         private KillsBox.KillsBox _killsBox;
+        private ConnectionDropdown _connectionDropdown;
+        private AddressInputField _addressInputField;
 
         [Inject]
         private void Constructor(Chat chat, ClientsData clientsData, UsernameInputField usernameInputField, Battle battle,
-            JoinBattleButton joinBattleButton, LeaveBattleButton leaveBattleButton, KillsBox.KillsBox killsBox)
+            JoinBattleButton joinBattleButton, LeaveBattleButton leaveBattleButton, KillsBox.KillsBox killsBox,
+            ConnectionDropdown connectionDropdown, AddressInputField addressInputField)
         {
             _chat = chat;
             _clientsData = clientsData;
@@ -30,6 +35,8 @@ namespace Networking
             _joinBattleButton = joinBattleButton;
             _leaveBattleButton = leaveBattleButton;
             _killsBox = killsBox;
+            _connectionDropdown = connectionDropdown;
+            _addressInputField = addressInputField;
         }
 
         public override void OnStartClient()
@@ -41,6 +48,8 @@ namespace Networking
             _usernameInputField.Interactable = false;
             _joinBattleButton.Interactable = true;
             _killsBox.Enabled = true;
+            _connectionDropdown.Interactable = false;
+            _addressInputField.Interactable = false;
         }
 
         public override void OnStopClient()
@@ -53,6 +62,8 @@ namespace Networking
             _joinBattleButton.Interactable = false;
             _leaveBattleButton.Interactable = false;
             _killsBox.Enabled = false;
+            _connectionDropdown.Interactable = true;
+            _addressInputField.Interactable = true;
         }
 
         private void CreateClientDataDelayed()
