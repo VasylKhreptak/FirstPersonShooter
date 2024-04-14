@@ -1,12 +1,12 @@
-﻿using FishNet.Managing;
-using FishNet.Managing.Logging;
-using FishNet.Transporting;
-using System;
+﻿using System;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using FishNet.Managing;
+using FishNet.Managing.Logging;
+using FishNet.Transporting;
 using UnityEngine;
 
 namespace FishNet.Discovery
@@ -135,15 +135,6 @@ namespace FishNet.Discovery
         private void OnApplicationQuit()
         {
             Shutdown();
-        }
-
-        private void Update()
-        {
-            if (Input.GetKeyDown(KeyCode.S))
-                AdvertiseServer();
-
-            if (Input.GetKeyDown(KeyCode.C))
-                SearchForServers();
         }
 
         /// <summary>
