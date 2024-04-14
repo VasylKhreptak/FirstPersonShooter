@@ -1,4 +1,3 @@
-using System;
 using System.Net;
 using FishNet;
 using FishNet.Discovery;
@@ -76,6 +75,9 @@ namespace UI.Buttons.Networking
                 return;
             }
 
+            if (InstanceFinder.IsClientStarted == false)
+                OnConnectionStateChanged(LocalConnectionState.Stopped);
+
             _networkDiscovery.StopSearching();
             InstanceFinder.ClientManager.StopConnection();
         }
@@ -86,8 +88,8 @@ namespace UI.Buttons.Networking
 
             if (_connectionDropdown.Value == 0)
             {
-                InstanceFinder.ClientManager.StartConnection("localhost");
-
+                // InstanceFinder.ClientManager.StartConnection("localhost");
+                OnConnectionStateChanged(LocalConnectionState.Starting);
                 StartSearchingServer();
                 return;
             }
@@ -135,7 +137,10 @@ namespace UI.Buttons.Networking
             _networkDiscovery.ServerFoundCallback -= OnServerFound;
         }
 
-        private void OnServerFound(IPEndPoint ipEndPoint) =>
+        private void OnServerFound(IPEndPoint ipEndPoint)
+        {
+            StopSearchingServer();
             InstanceFinder.ClientManager.StartConnection(ipEndPoint.Address.ToString());
+        }
     }
 }

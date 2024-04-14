@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using FishNet.Managing;
 using FishNet.Managing.Logging;
 using FishNet.Transporting;
-using TMPro;
 using UnityEngine;
 
 namespace FishNet.Discovery
@@ -188,11 +187,7 @@ namespace FishNet.Discovery
         public void AdvertiseServer()
         {
             if (IsAdvertising)
-            {
-                LogWarning("Server is already being advertised.");
-
                 return;
-            }
 
             _advertiseCancellationTokenSource = new CancellationTokenSource();
 
@@ -205,11 +200,7 @@ namespace FishNet.Discovery
         public void SearchForServers()
         {
             if (IsSearching)
-            {
-                LogWarning("Already searching for servers.");
-
                 return;
-            }
 
             _searchCancellationTokenSource = new CancellationTokenSource();
 
@@ -219,11 +210,7 @@ namespace FishNet.Discovery
         public void StopAdvertising()
         {
             if (_advertiseCancellationTokenSource == null)
-            {
-                LogWarning("Already not advertising.");
-
                 return;
-            }
 
             _advertiseCancellationTokenSource.Cancel();
 
@@ -235,11 +222,7 @@ namespace FishNet.Discovery
         public void StopSearching()
         {
             if (_searchCancellationTokenSource == null)
-            {
-                LogWarning("Already not searching.");
-
                 return;
-            }
 
             _searchCancellationTokenSource.Cancel();
 
@@ -271,7 +254,9 @@ namespace FishNet.Discovery
                 while (!cancellationToken.IsCancellationRequested)
                 {
                     if (udpClient == null)
+                    {
                         udpClient = new UdpClient(port);
+                    }
 
                     LogInformation("Waiting for request...");
 
