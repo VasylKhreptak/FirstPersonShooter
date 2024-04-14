@@ -3,92 +3,99 @@ using UnityEngine;
 
 namespace FishNet.Discovery
 {
-	public sealed class NetworkDiscoveryHud : MonoBehaviour
-	{
-		[SerializeField]
-		private NetworkDiscovery networkDiscovery;
+    public sealed class NetworkDiscoveryHud : MonoBehaviour
+    {
+        [SerializeField]
+        private NetworkDiscovery networkDiscovery;
 
-		private readonly HashSet<string> _addresses = new HashSet<string>();
+        private readonly HashSet<string> _addresses = new HashSet<string>();
 
-		private Vector2 _serversListScrollVector;
+        private Vector2 _serversListScrollVector;
 
-		private void Start()
-		{
-			if (networkDiscovery == null) networkDiscovery = FindObjectOfType<NetworkDiscovery>();
+        private void Start()
+        {
+            if (networkDiscovery == null)
+                networkDiscovery = FindObjectOfType<NetworkDiscovery>();
 
-			networkDiscovery.ServerFoundCallback += endPoint => _addresses.Add(endPoint.Address.ToString());
-		}
+            networkDiscovery.ServerFoundCallback += endPoint => _addresses.Add(endPoint.Address.ToString());
+        }
 
-		private void OnGUI()
-		{
-			GUILayoutOption buttonHeight = GUILayout.Height(30.0f);
+        private void OnGUI()
+        {
+            GUILayoutOption buttonHeight = GUILayout.Height(30.0f);
 
-			GUILayout.BeginArea(new Rect(Screen.width - 240.0f - 10.0f, 10.0f, 240.0f, Screen.height - 20.0f));
+            GUILayout.BeginArea(new Rect(Screen.width - 240.0f - 10.0f, 10.0f, 240.0f, Screen.height - 20.0f));
 
-			GUILayout.Box("Server");
+            GUILayout.Box("Server");
 
-			GUILayout.BeginHorizontal();
+            GUILayout.BeginHorizontal();
 
-			if (GUILayout.Button("Start", buttonHeight)) InstanceFinder.ServerManager.StartConnection();
+            if (GUILayout.Button("Start", buttonHeight))
+                InstanceFinder.ServerManager.StartConnection();
 
-			if (GUILayout.Button("Stop", buttonHeight)) InstanceFinder.ServerManager.StopConnection(true);
+            if (GUILayout.Button("Stop", buttonHeight))
+                InstanceFinder.ServerManager.StopConnection(true);
 
-			GUILayout.EndHorizontal();
+            GUILayout.EndHorizontal();
 
-			GUILayout.Box("Advertising");
+            GUILayout.Box("Advertising");
 
-			GUILayout.BeginHorizontal();
+            GUILayout.BeginHorizontal();
 
-			if (networkDiscovery.IsAdvertising)
-			{
-				if (GUILayout.Button("Stop", buttonHeight)) networkDiscovery.StopSearchingOrAdvertising();
-			}
-			else
-			{
-				if (GUILayout.Button("Start", buttonHeight)) networkDiscovery.AdvertiseServer();
-			}
+            if (networkDiscovery.IsAdvertising)
+            {
+                if (GUILayout.Button("Stop", buttonHeight))
+                    networkDiscovery.Stop();
+            }
+            else
+            {
+                if (GUILayout.Button("Start", buttonHeight))
+                    networkDiscovery.AdvertiseServer();
+            }
 
-			GUILayout.EndHorizontal();
+            GUILayout.EndHorizontal();
 
-			GUILayout.Box("Searching");
+            GUILayout.Box("Searching");
 
-			GUILayout.BeginHorizontal();
+            GUILayout.BeginHorizontal();
 
-			if (networkDiscovery.IsSearching)
-			{
-				if (GUILayout.Button("Stop", buttonHeight)) networkDiscovery.StopSearchingOrAdvertising();
-			}
-			else
-			{
-				if (GUILayout.Button("Start", buttonHeight)) networkDiscovery.SearchForServers();
-			}
+            if (networkDiscovery.IsSearching)
+            {
+                if (GUILayout.Button("Stop", buttonHeight))
+                    networkDiscovery.Stop();
+            }
+            else
+            {
+                if (GUILayout.Button("Start", buttonHeight))
+                    networkDiscovery.SearchForServers();
+            }
 
-			GUILayout.EndHorizontal();
+            GUILayout.EndHorizontal();
 
-			if (_addresses.Count < 1)
-			{
-				GUILayout.EndArea();
+            if (_addresses.Count < 1)
+            {
+                GUILayout.EndArea();
 
-				return;
-			}
+                return;
+            }
 
-			GUILayout.Box("Servers");
+            GUILayout.Box("Servers");
 
-			_serversListScrollVector = GUILayout.BeginScrollView(_serversListScrollVector);
+            _serversListScrollVector = GUILayout.BeginScrollView(_serversListScrollVector);
 
-			foreach (string address in _addresses)
-			{
-				if (GUILayout.Button(address))
-				{
-					networkDiscovery.StopSearchingOrAdvertising();
+            foreach (string address in _addresses)
+            {
+                if (GUILayout.Button(address))
+                {
+                    networkDiscovery.Stop();
 
-					InstanceFinder.ClientManager.StartConnection(address);
-				}
-			}
+                    InstanceFinder.ClientManager.StartConnection(address);
+                }
+            }
 
-			GUILayout.EndScrollView();
+            GUILayout.EndScrollView();
 
-			GUILayout.EndArea();
-		}
-	}
+            GUILayout.EndArea();
+        }
+    }
 }

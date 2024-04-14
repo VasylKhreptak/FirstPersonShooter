@@ -1,3 +1,4 @@
+using System;
 using System.Net;
 using FishNet;
 using FishNet.Discovery;
@@ -47,9 +48,6 @@ namespace UI.Buttons.Networking
         {
             base.OnEnable();
 
-            if (InstanceFinder.ClientManager == null)
-                return;
-
             InstanceFinder.ClientManager.OnClientConnectionState += OnClientConnectionStateChanged;
         }
 
@@ -62,6 +60,8 @@ namespace UI.Buttons.Networking
 
             InstanceFinder.ClientManager.OnClientConnectionState -= OnClientConnectionStateChanged;
         }
+
+        private void OnDestroy() => _networkDiscovery.StopSearching();
 
         #endregion
 
@@ -76,12 +76,14 @@ namespace UI.Buttons.Networking
                 return;
             }
 
-            _networkDiscovery.StopSearchingOrAdvertising();
+            _networkDiscovery.StopSearching();
             InstanceFinder.ClientManager.StopConnection();
         }
 
         private void TryConnect()
         {
+            StopSearchingServer();
+
             if (_connectionDropdown.Value == 0)
             {
                 InstanceFinder.ClientManager.StartConnection("localhost");
@@ -110,6 +112,7 @@ namespace UI.Buttons.Networking
                 case LocalConnectionState.Stopped:
                     _indicator.color = _disabledColor;
                     _isActive = false;
+                    StopSearchingServer();
                     break;
                 case LocalConnectionState.Starting:
                 case LocalConnectionState.Stopping:
@@ -122,10 +125,15 @@ namespace UI.Buttons.Networking
         {
             StopSearchingServer();
 
+            _networkDiscovery.SearchForServers();
             _networkDiscovery.ServerFoundCallback += OnServerFound;
         }
 
-        private void StopSearchingServer() => _networkDiscovery.ServerFoundCallback -= OnServerFound;
+        private void StopSearchingServer()
+        {
+            _networkDiscovery.StopSearching();
+            _networkDiscovery.ServerFoundCallback -= OnServerFound;
+        }
 
         private void OnServerFound(IPEndPoint ipEndPoint) =>
             InstanceFinder.ClientManager.StartConnection(ipEndPoint.Address.ToString());

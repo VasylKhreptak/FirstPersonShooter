@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using FishNet.Managing;
 using FishNet.Managing.Logging;
 using FishNet.Transporting;
+using TMPro;
 using UnityEngine;
 
 namespace FishNet.Discovery
@@ -69,7 +70,8 @@ namespace FishNet.Discovery
         /// <summary>
         /// Used to cancel the search or advertising.
         /// </summary>
-        private CancellationTokenSource _cancellationTokenSource;
+        private CancellationTokenSource _advertiseCancellationTokenSource;
+        private CancellationTokenSource _searchCancellationTokenSource;
 
         /// <summary>
         /// Called when a server is found.
@@ -149,7 +151,8 @@ namespace FishNet.Discovery
                 _networkManager.ClientManager.OnClientConnectionState -= ClientConnectionStateChangedEventHandler;
             }
 
-            StopSearchingOrAdvertising();
+            StopAdvertising();
+            StopSearching();
         }
 
         private void ServerConnectionStateChangedEventHandler(ServerConnectionStateArgs args)
@@ -160,7 +163,7 @@ namespace FishNet.Discovery
             }
             else if (args.ConnectionState == LocalConnectionState.Stopped)
             {
-                StopSearchingOrAdvertising();
+                StopAdvertising();
             }
         }
 
@@ -171,7 +174,7 @@ namespace FishNet.Discovery
 
             if (args.ConnectionState == LocalConnectionState.Started)
             {
-                StopSearchingOrAdvertising();
+                StopSearching();
             }
             else if (args.ConnectionState == LocalConnectionState.Stopped)
             {
@@ -191,9 +194,9 @@ namespace FishNet.Discovery
                 return;
             }
 
-            _cancellationTokenSource = new CancellationTokenSource();
+            _advertiseCancellationTokenSource = new CancellationTokenSource();
 
-            AdvertiseServerAsync(_cancellationTokenSource.Token).ConfigureAwait(false);
+            AdvertiseServerAsync(_advertiseCancellationTokenSource.Token).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -208,28 +211,47 @@ namespace FishNet.Discovery
                 return;
             }
 
-            _cancellationTokenSource = new CancellationTokenSource();
+            _searchCancellationTokenSource = new CancellationTokenSource();
 
-            SearchForServersAsync(_cancellationTokenSource.Token).ConfigureAwait(false);
+            SearchForServersAsync(_searchCancellationTokenSource.Token).ConfigureAwait(false);
         }
 
-        /// <summary>
-        /// Stops searching or advertising.
-        /// </summary>
-        public void StopSearchingOrAdvertising()
+        public void StopAdvertising()
         {
-            if (_cancellationTokenSource == null)
+            if (_advertiseCancellationTokenSource == null)
             {
-                LogWarning("Not searching or advertising.");
+                LogWarning("Already not advertising.");
 
                 return;
             }
 
-            _cancellationTokenSource.Cancel();
+            _advertiseCancellationTokenSource.Cancel();
 
-            _cancellationTokenSource.Dispose();
+            _advertiseCancellationTokenSource.Dispose();
 
-            _cancellationTokenSource = null;
+            _advertiseCancellationTokenSource = null;
+        }
+
+        public void StopSearching()
+        {
+            if (_searchCancellationTokenSource == null)
+            {
+                LogWarning("Already not searching.");
+
+                return;
+            }
+
+            _searchCancellationTokenSource.Cancel();
+
+            _searchCancellationTokenSource.Dispose();
+
+            _searchCancellationTokenSource = null;
+        }
+
+        public void Stop()
+        {
+            StopAdvertising();
+            StopSearching();
         }
 
         /// <summary>

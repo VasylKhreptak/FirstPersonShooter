@@ -42,9 +42,6 @@ namespace UI.Buttons.Networking
         {
             base.OnEnable();
 
-            if (InstanceFinder.ServerManager == null)
-                return;
-
             InstanceFinder.ServerManager.OnServerConnectionState += OnServerConnectionStateChanged;
         }
 
@@ -58,7 +55,7 @@ namespace UI.Buttons.Networking
             InstanceFinder.ServerManager.OnServerConnectionState -= OnServerConnectionStateChanged;
         }
 
-        private void OnDestroy() => _networkDiscovery.StopSearchingOrAdvertising();
+        private void OnDestroy() => _networkDiscovery.StopAdvertising();
 
         #endregion
 
@@ -72,7 +69,7 @@ namespace UI.Buttons.Networking
                 return;
             }
 
-            _networkDiscovery.StopSearchingOrAdvertising();
+            _networkDiscovery.StopAdvertising();
             InstanceFinder.ServerManager.StopConnection(true);
         }
 
@@ -90,6 +87,7 @@ namespace UI.Buttons.Networking
                     break;
                 case LocalConnectionState.Stopped:
                     _indicator.color = _disabledColor;
+                    _networkDiscovery.StopAdvertising();
                     break;
                 case LocalConnectionState.Starting:
                 case LocalConnectionState.Stopping:
