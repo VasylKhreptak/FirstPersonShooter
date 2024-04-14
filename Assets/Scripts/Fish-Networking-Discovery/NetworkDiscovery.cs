@@ -153,8 +153,6 @@ namespace FishNet.Discovery
         {
             if (_networkManager != null && _networkManager.ServerManager != null && _networkManager.ClientManager != null)
             {
-                Debug.Log("Server manager == null: " + (_networkManager.ServerManager == null));
-
                 _networkManager.ServerManager.OnServerConnectionState -= ServerConnectionStateChangedEventHandler;
 
                 _networkManager.ClientManager.OnClientConnectionState -= ClientConnectionStateChangedEventHandler;
