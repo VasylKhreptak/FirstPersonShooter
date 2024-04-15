@@ -45,7 +45,7 @@ namespace FishNet.Discovery
             if (networkDiscovery.IsAdvertising)
             {
                 if (GUILayout.Button("Stop", buttonHeight))
-                    networkDiscovery.Stop();
+                    networkDiscovery.StopAdvertising();
             }
             else
             {
@@ -62,7 +62,7 @@ namespace FishNet.Discovery
             if (networkDiscovery.IsSearching)
             {
                 if (GUILayout.Button("Stop", buttonHeight))
-                    networkDiscovery.Stop();
+                    networkDiscovery.StopSearching();
             }
             else
             {
@@ -87,7 +87,7 @@ namespace FishNet.Discovery
             {
                 if (GUILayout.Button(address))
                 {
-                    networkDiscovery.Stop();
+                    networkDiscovery.StopSearching();
 
                     InstanceFinder.ClientManager.StartConnection(address);
                 }
