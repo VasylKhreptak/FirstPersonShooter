@@ -39,6 +39,7 @@ namespace Main.Zenject
         [SerializeField] private NetworkDiscovery _networkDiscovery;
         [SerializeField] private ConnectionDropdown _connectionDropdown;
         [SerializeField] private AddressInputField _addressInputField;
+        [SerializeField] private PlayInformation _playInformation;
 
         [Header("Preferences")]
         [SerializeField] private List<Transform> _playerSpawnPoints;
@@ -64,6 +65,7 @@ namespace Main.Zenject
             _networkDiscovery ??= FindObjectOfType<NetworkDiscovery>(true);
             _connectionDropdown ??= FindObjectOfType<ConnectionDropdown>(true);
             _addressInputField ??= FindObjectOfType<AddressInputField>(true);
+            _playInformation ??= FindObjectOfType<PlayInformation>(true);
         }
 
         #endregion
@@ -90,6 +92,7 @@ namespace Main.Zenject
             Container.BindInstance(_networkDiscovery).AsSingle();
             Container.BindInstance(_connectionDropdown).AsSingle();
             Container.BindInstance(_addressInputField).AsSingle();
+            Container.BindInstance(_playInformation).AsSingle();
         }
     }
 }

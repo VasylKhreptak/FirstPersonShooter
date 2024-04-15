@@ -3,6 +3,7 @@ using Data;
 using FishNet.Object;
 using Infrastructure.Services.Log.Core;
 using Networking.Messaging.Chat;
+using UI;
 using UI.Buttons;
 using UI.Dropdowns;
 using UI.InputFields;
@@ -24,11 +25,13 @@ namespace Networking
         private ConnectionDropdown _connectionDropdown;
         private AddressInputField _addressInputField;
         private ILogService _logService;
+        private PlayInformation _playInformation;
 
         [Inject]
         private void Constructor(Chat chat, ClientsData clientsData, UsernameInputField usernameInputField, Battle battle,
             JoinBattleButton joinBattleButton, LeaveBattleButton leaveBattleButton, KillsBox.KillsBox killsBox,
-            ConnectionDropdown connectionDropdown, AddressInputField addressInputField, ILogService logService)
+            ConnectionDropdown connectionDropdown, AddressInputField addressInputField, ILogService logService,
+            PlayInformation playInformation)
         {
             _chat = chat;
             _clientsData = clientsData;
@@ -40,6 +43,7 @@ namespace Networking
             _connectionDropdown = connectionDropdown;
             _addressInputField = addressInputField;
             _logService = logService;
+            _playInformation = playInformation;
         }
 
         public override void OnStartClient()
@@ -53,6 +57,8 @@ namespace Networking
             _killsBox.Enabled = true;
             _connectionDropdown.Interactable = false;
             _addressInputField.Interactable = false;
+            _playInformation.Enabled = true;
+            _logService.Log("Client started");
         }
 
         public override void OnStopClient()
@@ -67,6 +73,8 @@ namespace Networking
             _killsBox.Enabled = false;
             _connectionDropdown.Interactable = true;
             _addressInputField.Interactable = true;
+            _playInformation.Enabled = false;
+            _logService.Log("Client stopped");
         }
 
         private void CreateClientDataDelayed()
