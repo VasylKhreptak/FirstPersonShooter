@@ -1,6 +1,7 @@
 using System;
 using Data;
 using FishNet.Object;
+using Infrastructure.Services.Log.Core;
 using Networking.Messaging.Chat;
 using UI.Buttons;
 using UI.Dropdowns;
@@ -22,11 +23,12 @@ namespace Networking
         private KillsBox.KillsBox _killsBox;
         private ConnectionDropdown _connectionDropdown;
         private AddressInputField _addressInputField;
+        private ILogService _logService;
 
         [Inject]
         private void Constructor(Chat chat, ClientsData clientsData, UsernameInputField usernameInputField, Battle battle,
             JoinBattleButton joinBattleButton, LeaveBattleButton leaveBattleButton, KillsBox.KillsBox killsBox,
-            ConnectionDropdown connectionDropdown, AddressInputField addressInputField)
+            ConnectionDropdown connectionDropdown, AddressInputField addressInputField, ILogService logService)
         {
             _chat = chat;
             _clientsData = clientsData;
@@ -37,6 +39,7 @@ namespace Networking
             _killsBox = killsBox;
             _connectionDropdown = connectionDropdown;
             _addressInputField = addressInputField;
+            _logService = logService;
         }
 
         public override void OnStartClient()
