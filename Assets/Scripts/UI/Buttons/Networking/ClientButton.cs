@@ -95,7 +95,8 @@ namespace UI.Buttons.Networking
             }
 
             if (IPAddress.TryParse(_addressInputField.Text, out IPAddress _))
-                InstanceFinder.ClientManager.StartConnection(_addressInputField.Text);
+                InstanceFinder.ClientManager.StartConnection(_addressInputField.Text,
+                    InstanceFinder.NetworkManager.TransportManager.Transport.GetPort());
             else
                 Debug.LogError("Invalid IP address: " + _addressInputField.Text);
         }
