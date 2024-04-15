@@ -88,7 +88,6 @@ namespace UI.Buttons.Networking
 
             if (_connectionDropdown.Value == 0)
             {
-                // InstanceFinder.ClientManager.StartConnection("localhost");
                 OnConnectionStateChanged(LocalConnectionState.Starting);
                 StartSearchingServer();
                 return;
