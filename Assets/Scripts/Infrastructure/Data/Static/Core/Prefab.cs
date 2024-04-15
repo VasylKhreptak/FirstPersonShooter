@@ -4,6 +4,6 @@
     {
         Player = 0,
         StoneImpactParticle = 1,
-        FireFlashParticle = 2,
+        FireFlashParticle = 2
     }
 }

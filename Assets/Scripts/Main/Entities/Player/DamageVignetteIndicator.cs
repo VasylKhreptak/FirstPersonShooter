@@ -65,12 +65,10 @@ namespace Main.Entities.Player
                 .Play();
         }
 
-        private Tween CreateIntensityTween(float intensity, float duration, AnimationCurve curve)
-        {
-            return DOTween
+        private Tween CreateIntensityTween(float intensity, float duration, AnimationCurve curve) =>
+            DOTween
                 .To(GetIntensity, SetIntensity, intensity, duration)
                 .SetEase(curve);
-        }
 
         private void KillIntensityKill() => _intensityTween?.Kill();
 

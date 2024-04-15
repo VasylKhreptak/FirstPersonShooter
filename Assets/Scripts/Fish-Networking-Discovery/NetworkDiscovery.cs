@@ -12,12 +12,12 @@ using UnityEngine;
 namespace FishNet.Discovery
 {
     /// <summary>
-    /// Allows clients to find servers on the local network.
+    ///     Allows clients to find servers on the local network.
     /// </summary>
     public sealed class NetworkDiscovery : MonoBehaviour
     {
         /// <summary>
-        /// Used to send a response to a client.
+        ///     Used to send a response to a client.
         /// </summary>
         private static readonly byte[] OkBytes =
         {
@@ -25,75 +25,72 @@ namespace FishNet.Discovery
         };
 
         /// <summary>
-        /// NetworkManager to use.
+        ///     NetworkManager to use.
         /// </summary>
         private NetworkManager _networkManager;
 
         /// <summary>
-        /// Secret to use when advertising or searching for servers.
+        ///     Secret to use when advertising or searching for servers.
         /// </summary>
         [SerializeField]
         [Tooltip("Secret to use when advertising or searching for servers.")]
         private string secret;
 
         /// <summary>
-        /// Byte-representation of the secret to use when advertising or searching for servers.
+        ///     Byte-representation of the secret to use when advertising or searching for servers.
         /// </summary>
         private byte[] _secretBytes;
 
         /// <summary>
-        /// Port to use when advertising or searching for servers.
+        ///     Port to use when advertising or searching for servers.
         /// </summary>
         [SerializeField]
         [Tooltip("Port to use when advertising or searching for servers.")]
         private ushort port;
 
         /// <summary>
-        /// How long (in seconds) to wait for a response when advertising or searching for servers.
+        ///     How long (in seconds) to wait for a response when advertising or searching for servers.
         /// </summary>
         [SerializeField]
         [Tooltip("How long (in seconds) to wait for a response when advertising or searching for servers.")]
         private float searchTimeout;
 
         /// <summary>
-        /// If true, will automatically start advertising or searching for servers when the NetworkManager starts or stops.
+        ///     If true, will automatically start advertising or searching for servers when the NetworkManager starts or stops.
         /// </summary>
         [SerializeField]
         private bool automatic;
 
         /// <summary>
-        /// SynchronizationContext of the main thread.
+        ///     SynchronizationContext of the main thread.
         /// </summary>
         private SynchronizationContext _mainThreadSynchronizationContext;
 
         /// <summary>
-        /// Used to cancel the search or advertising.
+        ///     Used to cancel the search or advertising.
         /// </summary>
         private CancellationTokenSource _advertiseCancellationTokenSource;
         private CancellationTokenSource _searchCancellationTokenSource;
 
         /// <summary>
-        /// Called when a server is found.
+        ///     Called when a server is found.
         /// </summary>
         public event Action<IPEndPoint> ServerFoundCallback;
 
         /// <summary>
-        /// True if the server is being advertised.
+        ///     True if the server is being advertised.
         /// </summary>
         public bool IsAdvertising { get; private set; }
 
         /// <summary>
-        /// True if the client is searching for servers.
+        ///     True if the client is searching for servers.
         /// </summary>
         public bool IsSearching { get; private set; }
 
         /// <summary>
-        /// How long (in seconds) to wait for a response when advertising or searching for servers.
+        ///     How long (in seconds) to wait for a response when advertising or searching for servers.
         /// </summary>
-        private float SearchTimeout
-        {
-            get => searchTimeout < 1.0f ? 1.0f : searchTimeout;
-        }
+        private float SearchTimeout => searchTimeout < 1.0f ? 1.0f : searchTimeout;
 
         private void Awake()
         {
@@ -139,7 +136,7 @@ namespace FishNet.Discovery
         }
 
         /// <summary>
-        /// Shuts down the NetworkDiscovery.
+        ///     Shuts down the NetworkDiscovery.
         /// </summary>
         private void Shutdown()
         {
@@ -157,13 +154,9 @@ namespace FishNet.Discovery
         private void ServerConnectionStateChangedEventHandler(ServerConnectionStateArgs args)
         {
             if (args.ConnectionState == LocalConnectionState.Started)
-            {
                 AdvertiseServer();
-            }
             else if (args.ConnectionState == LocalConnectionState.Stopped)
-            {
                 StopAdvertising();
-            }
         }
 
         private void ClientConnectionStateChangedEventHandler(ClientConnectionStateArgs args)
@@ -172,17 +165,13 @@ namespace FishNet.Discovery
                 return;
 
             if (args.ConnectionState == LocalConnectionState.Started)
-            {
                 StopSearching();
-            }
             else if (args.ConnectionState == LocalConnectionState.Stopped)
-            {
                 SearchForServers();
-            }
         }
 
         /// <summary>
-        /// Advertises the server on the local network.
+        ///     Advertises the server on the local network.
         /// </summary>
         public void AdvertiseServer()
         {
@@ -195,7 +184,7 @@ namespace FishNet.Discovery
         }
 
         /// <summary>
-        /// Searches for servers on the local network.
+        ///     Searches for servers on the local network.
         /// </summary>
         public void SearchForServers()
         {
@@ -238,7 +227,7 @@ namespace FishNet.Discovery
         }
 
         /// <summary>
-        /// Advertises the server on the local network.
+        ///     Advertises the server on the local network.
         /// </summary>
         /// <param name="cancellationToken">Used to cancel advertising.</param>
         private async Task AdvertiseServerAsync(CancellationToken cancellationToken)
@@ -254,9 +243,7 @@ namespace FishNet.Discovery
                 while (!cancellationToken.IsCancellationRequested)
                 {
                     if (udpClient == null)
-                    {
                         udpClient = new UdpClient(port);
-                    }
 
                     LogInformation("Waiting for request...");
 
@@ -279,18 +266,14 @@ namespace FishNet.Discovery
                             await udpClient.SendAsync(OkBytes, OkBytes.Length, result.RemoteEndPoint);
                         }
                         else
-                        {
                             LogWarning($"Received invalid request from {result.RemoteEndPoint}.");
-                        }
                     }
                     else
-                    {
                         LogInformation("Timed out. Retrying...");
 
-                        udpClient.Close();
+                    udpClient.Close();
 
-                        udpClient = null;
-                    }
+                    udpClient = null;
                 }
 
                 LogInformation("Stopped advertising server.");
@@ -310,7 +293,7 @@ namespace FishNet.Discovery
         }
 
         /// <summary>
-        /// Searches for servers on the local network.
+        ///     Searches for servers on the local network.
         /// </summary>
         /// <param name="cancellationToken">Used to cancel searching.</param>
         private async Task SearchForServersAsync(CancellationToken cancellationToken)
@@ -328,7 +311,7 @@ namespace FishNet.Discovery
                 while (!cancellationToken.IsCancellationRequested)
                 {
                     if (udpClient == null)
-                        udpClient = new UdpClient();
+                        udpClient = new UdpClient(0);
 
                     LogInformation("Sending request...");
 
@@ -354,9 +337,7 @@ namespace FishNet.Discovery
                                 null);
                         }
                         else
-                        {
                             LogWarning($"Received invalid response from {result.RemoteEndPoint}.");
-                        }
                     }
                     else
                     {
@@ -373,13 +354,9 @@ namespace FishNet.Discovery
             catch (SocketException socketException)
             {
                 if (socketException.SocketErrorCode == SocketError.AddressAlreadyInUse)
-                {
                     LogError($"Unable to search for servers. Port {port} is already in use.");
-                }
                 else
-                {
                     Debug.LogException(socketException, this);
-                }
             }
             catch (Exception exception)
             {
@@ -394,7 +371,7 @@ namespace FishNet.Discovery
         }
 
         /// <summary>
-        /// Logs a message if the NetworkManager can log.
+        ///     Logs a message if the NetworkManager can log.
         /// </summary>
         /// <param name="message">Message to log.</param>
         private void LogInformation(string message)
@@ -403,7 +380,7 @@ namespace FishNet.Discovery
         }
 
         /// <summary>
-        /// Logs a warning if the NetworkManager can log.
+        ///     Logs a warning if the NetworkManager can log.
         /// </summary>
         /// <param name="message">Message to log.</param>
         private void LogWarning(string message)
@@ -412,7 +389,7 @@ namespace FishNet.Discovery
         }
 
         /// <summary>
-        /// Logs an error if the NetworkManager can log.
+        ///     Logs an error if the NetworkManager can log.
         /// </summary>
         /// <param name="message">Message to log.</param>
         private void LogError(string message)
